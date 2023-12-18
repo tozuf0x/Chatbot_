@@ -1,0 +1,21 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+*:disabled {
+  cursor: default;
+
+  pointer-events: none;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  object-fit: cover;
+}
