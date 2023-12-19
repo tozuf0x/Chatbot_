@@ -5,7 +5,7 @@ export enum AppRoute {
 }
 
 export enum APIRoute {
-  Recommendations = 'recommendations',
+  Guidances = 'guidances',
 }
 
 export enum Mode {

@@ -8,5 +8,11 @@
 .content {
   display: flex;
   flex-direction: column;
-  padding: 25px 15px;
+  padding: 20px 40px;
+}
+
+.title {
+  font-size: 18px !important;
+  margin: 0 0 25px !important;
+  text-align: center;
 }
