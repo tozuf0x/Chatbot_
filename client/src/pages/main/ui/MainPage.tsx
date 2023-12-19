@@ -1,5 +1,6 @@
 import { Layout, Typography } from 'antd';
 import { Helmet } from 'react-helmet-async';
+import { Header } from '@/widgets/header';
 import styles from './styles.module.scss';
 
 const { Content } = Layout;
@@ -12,6 +13,8 @@ export function MainPage() {
       </Helmet>
 
       <Layout className={styles.layout}>
+        <Header />
+
         <Content className={styles.content}>
           <h1 className="visually-hidden">Интерфейс администрирования.</h1>
           <Typography.Title>Главная страница</Typography.Title>

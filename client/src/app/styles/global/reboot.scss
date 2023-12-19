@@ -19,3 +19,7 @@ body {
 img {
   object-fit: cover;
 }
+
+a {
+  transition: all $trans-300;
+}
