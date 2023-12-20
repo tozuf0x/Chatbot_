@@ -1,41 +1,12 @@
 import { Button, Flex, Table, TablePaginationConfig } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { useState } from 'react';
+import { Key, useState } from 'react';
 import { changeMode } from '@/entities/guidance';
 import { useAppDispatch } from '@/shared/lib';
-import { appliedAreaFilters } from '../const';
+import { getAppliedAreaFilters } from '../lib/getAppliedAreaFilters';
 import styles from './styles.module.scss';
 import { Mode } from '@/const';
 import { guidances } from '@/mock/guidances';
-
-const columns: ColumnsType<IGuidanceData> = [
-  {
-    title: 'Код ошибки',
-    dataIndex: 'errorCode',
-    width: '15%',
-  },
-  {
-    title: 'Прикладная область',
-    dataIndex: 'appliedArea',
-    width: '15%',
-    filters: appliedAreaFilters,
-  },
-  {
-    title: 'Текст ошибки',
-    dataIndex: 'errorText',
-    width: '35%',
-  },
-  {
-    title: 'Рекомендация',
-    dataIndex: 'guidanceText',
-    width: '35%',
-  },
-];
-
-const paginationConfig: TablePaginationConfig = {
-  position: ['bottomCenter'],
-  pageSizeOptions: [10, 25, 50],
-};
 
 export function GuidancesTable() {
   const dispatch = useAppDispatch();
@@ -49,6 +20,39 @@ export function GuidancesTable() {
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
+  };
+
+  const appliedAreaFilters = getAppliedAreaFilters(guidances);
+
+  const columns: ColumnsType<IGuidanceData> = [
+    {
+      title: 'Код ошибки',
+      dataIndex: 'errorCode',
+      width: '15%',
+    },
+    {
+      title: 'Прикладная область',
+      dataIndex: 'appliedArea',
+      width: '15%',
+      filters: appliedAreaFilters,
+      filterSearch: true,
+      onFilter: (value: boolean | Key, record: IGuidanceData) => record.appliedArea === value,
+    },
+    {
+      title: 'Текст ошибки',
+      dataIndex: 'errorText',
+      width: '35%',
+    },
+    {
+      title: 'Рекомендация',
+      dataIndex: 'guidanceText',
+      width: '35%',
+    },
+  ];
+
+  const paginationConfig: TablePaginationConfig = {
+    position: ['bottomCenter'],
+    pageSizeOptions: [10, 25, 50],
   };
 
   return (
