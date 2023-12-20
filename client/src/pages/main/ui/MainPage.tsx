@@ -2,6 +2,7 @@ import { Layout, Typography } from 'antd';
 import { Helmet } from 'react-helmet-async';
 import { GuidancesTable } from '@/widgets/guidancesTable';
 import { Header } from '@/widgets/header';
+import { Modal } from '@/widgets/modal';
 import styles from './styles.module.scss';
 
 const { Content } = Layout;
@@ -22,8 +23,8 @@ export function MainPage() {
             Интерфейс администрирования для ведения базы данных для чат-бота
             поддержки пользователей по&nbsp;ошибкам направления P2P&nbsp;S4
           </Title>
-          <h1 className="visually-hidden">Интерфейс администрирования.</h1>
           <GuidancesTable />
+          <Modal />
         </Content>
       </Layout>
     </>
