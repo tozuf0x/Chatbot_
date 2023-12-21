@@ -4,7 +4,11 @@ import {
   changeSelectedGuidances,
   selectedGuidancesSelector,
 } from '@/entities/guidance';
-import { useAppDispatch, useAppSelector } from '@/shared/lib';
+import {
+  changeNotification,
+  useAppDispatch,
+  useAppSelector,
+} from '@/shared/lib';
 import styles from './styles.module.scss';
 import { Mode } from '@/const';
 
@@ -22,9 +26,18 @@ export function DeleteGuidanceModal() {
   };
 
   const handleDeleteGuidanceSubmit = () => {
-    //!TODO: добавить удаление записей
+    //!TODO: добавить удаление записей с закрытием модалки, перенести нотифай
     handleModalClose();
     dispatch(changeSelectedGuidances([]));
+
+    dispatch(
+      changeNotification({
+        type: 'success',
+        title: 'Успех!',
+        text: 'Записи были успешно удалены',
+      })
+    );
+
     console.log('Были удалены записи: ', selectedGuidances);
   };
 

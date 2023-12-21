@@ -12,7 +12,7 @@ import {
 import clsx from 'clsx';
 import { ChangeEvent, KeyboardEvent, Ref, useRef, useState } from 'react';
 import { changeMode } from '@/entities/guidance';
-import { useAppDispatch, focusOnInput } from '@/shared/lib';
+import { useAppDispatch, focusOnInput, changeNotification } from '@/shared/lib';
 import { validationRule } from '../const';
 import { getAppliedAreas } from '../lib/getAppliedAreas';
 import styles from './styles.module.scss';
@@ -70,8 +70,15 @@ export function AddGuidanceModal() {
   };
 
   const handleFormSubmit = (record: IGuidanceData) => {
-    //!TODO: добавить отправку новой записи без закрытия модалки
+    //!TODO: добавить отправку новой записи без закрытия модалки, перенести нотифай
     handleFormReset();
+
+    dispatch(changeNotification({
+      type: 'success',
+      title: 'Успех!',
+      text: 'Новая запись была успешно добавлена',
+    }));
+
     console.log('Была добавлена новая запись: ', record);
   };
 

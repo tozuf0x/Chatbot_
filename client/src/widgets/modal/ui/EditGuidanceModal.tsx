@@ -15,7 +15,11 @@ import {
   changeSelectedGuidances,
   selectedGuidancesSelector,
 } from '@/entities/guidance';
-import { useAppDispatch, useAppSelector } from '@/shared/lib';
+import {
+  changeNotification,
+  useAppDispatch,
+  useAppSelector,
+} from '@/shared/lib';
 import { validationRule } from '../const';
 import { getAppliedAreas } from '../lib/getAppliedAreas';
 import styles from './styles.module.scss';
@@ -75,7 +79,15 @@ export function EditGuidanceModal() {
   };
 
   const handleFormSubmit = (record: IGuidanceData) => {
-    //!TODO: добавить отправку отредактированной записи без закрытия модалки
+    //!TODO: добавить отправку отредактированной записи без закрытия модалки, перенести нотифай
+    dispatch(
+      changeNotification({
+        type: 'success',
+        title: 'Успех!',
+        text: 'Запись была успешно отредактирована',
+      })
+    );
+
     console.log('Была отредактирована запись: ', record);
   };
 
