@@ -1,7 +1,13 @@
 .modal {
-  min-height: 50vh;
-  min-width: 40vw;
-  margin: 40px 0;
+  &-form {
+    min-height: 50vh;
+    min-width: 40vw;
+    margin: 40px 0;
+  }
+
+  &-dialog {
+    width: 300px !important;
+  }
 }
 
 .title {
@@ -33,5 +39,5 @@
 }
 
 .buttons {
-  margin-top: 40px;
+  margin-top: 20px;
 }

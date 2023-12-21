@@ -10,7 +10,11 @@ import {
 } from 'antd';
 import clsx from 'clsx';
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
-import { changeMode, selectedGuidancesSelector } from '@/entities/guidance';
+import {
+  changeMode,
+  changeSelectedGuidances,
+  selectedGuidancesSelector,
+} from '@/entities/guidance';
 import { useAppDispatch, useAppSelector } from '@/shared/lib';
 import { validationRule } from '../const';
 import { getAppliedAreas } from '../lib/getAppliedAreas';
@@ -50,6 +54,7 @@ export function EditGuidanceModal() {
     // }
     handleFormReset();
     handleModeReset();
+    dispatch(changeSelectedGuidances([]));
   };
 
   const handleFieldChange = (
@@ -76,16 +81,17 @@ export function EditGuidanceModal() {
 
   return (
     <Modal
-      className={styles.modal}
+      className={styles['modal-form']}
+      title={
+        <Title className={styles.title} level={2}>
+          Редактирование записи
+        </Title>
+      }
       open
       centered
       footer={false}
       onCancel={handleModalClose}
     >
-      <Title className={styles.title} level={2}>
-        Редактирование записи
-      </Title>
-
       <Form
         form={form}
         layout="vertical"
@@ -185,13 +191,8 @@ export function EditGuidanceModal() {
             Сохранить
           </Button>
 
-          <Button
-            htmlType="button"
-            type="link"
-            danger
-            onClick={handleFormReset}
-          >
-            Сбросить
+          <Button htmlType="button" type="link" onClick={handleModalClose}>
+            Отменить
           </Button>
         </Flex>
       </Form>

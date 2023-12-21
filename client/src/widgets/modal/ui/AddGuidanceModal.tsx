@@ -77,17 +77,18 @@ export function AddGuidanceModal() {
 
   return (
     <Modal
-      className={styles.modal}
+      className={styles['modal-form']}
+      title={
+        <Title className={styles.title} level={2}>
+          Новая запись
+        </Title>
+      }
       open
       centered
       footer={false}
       afterOpenChange={handleModalOpen}
       onCancel={handleModalClose}
     >
-      <Title className={styles.title} level={2}>
-        Новая запись
-      </Title>
-
       <Form
         form={form}
         layout="vertical"
@@ -186,6 +187,10 @@ export function AddGuidanceModal() {
         <Flex className={styles.buttons} justify="center" gap="middle">
           <Button htmlType="submit" type="primary">
             Добавить
+          </Button>
+
+          <Button htmlType="button" type="link" onClick={handleModalClose}>
+            Отменить
           </Button>
 
           <Button

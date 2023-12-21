@@ -2,7 +2,7 @@ import { Layout, Typography } from 'antd';
 import { Helmet } from 'react-helmet-async';
 import { GuidancesTable } from '@/widgets/guidancesTable';
 import { Header } from '@/widgets/header';
-import { Modal } from '@/widgets/modal';
+import { ModalEntry } from '@/widgets/modal';
 import styles from './styles.module.scss';
 
 const { Content } = Layout;
@@ -24,7 +24,7 @@ export function MainPage() {
             поддержки пользователей по&nbsp;ошибкам направления P2P&nbsp;S4
           </Title>
           <GuidancesTable />
-          <Modal />
+          <ModalEntry />
         </Content>
       </Layout>
     </>
