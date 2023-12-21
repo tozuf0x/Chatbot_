@@ -1,0 +1,39 @@
+.header {
+  height: auto !important;
+  padding: 5px 40px !important;
+
+  background-color: $color-prussian-blue;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+.sign-out {
+  display: flex;
+  justify-content: end;
+  align-self: center;
+}
+
+.mail {
+  display: flex;
+  align-self: center;
+
+  color: $color-default-white !important;
+}
+
+.link {
+  padding: 10px;
+
+  color: $color-default-white !important;
+
+  @include hover-focus {
+    color: orange !important;
+  }
+
+  @include active {
+    opacity: 0.8;
+  }
+}

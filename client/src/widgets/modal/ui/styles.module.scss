@@ -1,0 +1,43 @@
+.modal {
+  &-form {
+    min-height: 50vh;
+    min-width: 40vw;
+    margin: 40px 0;
+  }
+
+  &-dialog {
+    width: 300px !important;
+  }
+}
+
+.title {
+  font-size: 18px !important;
+  text-align: center;
+}
+
+.item {
+  padding-bottom: 5px;
+}
+
+.text,
+.label label,
+.input,
+.textarea,
+.select {
+  font-size: 16px !important;
+  width: 100%;
+}
+
+.textarea {
+  & textarea {
+    resize: none !important;
+  }
+}
+
+.divider {
+  margin: 10px 0;
+}
+
+.buttons {
+  margin-top: 20px;
+}
