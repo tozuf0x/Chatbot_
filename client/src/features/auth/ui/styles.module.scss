@@ -1,0 +1,24 @@
+.title {
+  font-size: 18px !important;
+  text-align: center;
+}
+
+.label label,
+.input {
+  font-size: 16px !important;
+  width: 100%;
+}
+
+.form {
+  width: 35vw;
+  margin: auto;
+  padding: 30px;
+
+  background-color: $color-default-white;
+  border-radius: 15px;
+}
+
+.buttons {
+  margin-top: 40px;
+}
+
