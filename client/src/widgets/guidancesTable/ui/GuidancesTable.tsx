@@ -1,8 +1,16 @@
 import { Button, Flex, Table, TablePaginationConfig } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { Key, useState } from 'react';
-import { changeMode } from '@/entities/guidance';
-import { useAppDispatch } from '@/shared/lib';
+import { Key } from 'react';
+import {
+  changeMode,
+  changeSelectedGuidances,
+  selectedGuidancesSelector,
+} from '@/entities/guidance';
+import {
+  changeNotification,
+  useAppDispatch,
+  useAppSelector,
+} from '@/shared/lib';
 import { getAppliedAreaFilters } from '../lib/getAppliedAreaFilters';
 import styles from './styles.module.scss';
 import { Mode } from '@/const';
@@ -10,18 +18,8 @@ import { guidances } from '@/mock/guidances';
 
 export function GuidancesTable() {
   const dispatch = useAppDispatch();
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-    console.log('selectedRowKeys: ', newSelectedRowKeys);
-  };
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-
+  const selectedGuidances = useAppSelector(selectedGuidancesSelector);
+  const selectedRowKeys = selectedGuidances.map((item) => item.errorCode);
   const appliedAreaFilters = getAppliedAreaFilters(guidances);
 
   const columns: ColumnsType<IGuidanceData> = [
@@ -52,7 +50,62 @@ export function GuidancesTable() {
 
   const paginationConfig: TablePaginationConfig = {
     position: ['bottomCenter'],
-    pageSizeOptions: [10, 25, 50],
+    pageSizeOptions: [10, 25, 50, 100],
+  };
+
+  const handleSelectedGuidancesChange = (
+    _: Key[],
+    records: IGuidanceData[]
+  ) => {
+    dispatch(changeSelectedGuidances(records));
+    console.log('selectedRecords: ', records);
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: handleSelectedGuidancesChange,
+  };
+
+  const handleAddButtonClick = () => {
+    dispatch(changeMode(Mode.Add));
+  };
+
+  const handleEditButtonClick = () => {
+    if (selectedGuidances.length === 0) {
+      dispatch(changeNotification({
+        type: 'error',
+        title: 'Ошибка!',
+        text: 'Не выбрана запись для редактирования',
+      }));
+
+      return;
+    }
+
+    if (selectedGuidances.length > 1) {
+      dispatch(changeNotification({
+        type: 'error',
+        title: 'Ошибка!',
+        text: 'Нельзя одновременно редактировать несколько записей',
+      }));
+
+      return;
+    }
+
+    dispatch(changeMode(Mode.Edit));
+  };
+
+  const handleDeleteButtonClick = () => {
+    if (selectedGuidances.length === 0) {
+      dispatch(changeNotification({
+        type: 'error',
+        title: 'Ошибка!',
+        text: 'Не выбраны записи для удаления',
+      }));
+
+      return;
+    }
+
+    dispatch(changeMode(Mode.Delete));
   };
 
   return (
@@ -71,7 +124,7 @@ export function GuidancesTable() {
         <Button
           htmlType="button"
           type="primary"
-          onClick={() => dispatch(changeMode(Mode.Add))}
+          onClick={handleAddButtonClick}
         >
           Добавить
         </Button>
@@ -79,7 +132,7 @@ export function GuidancesTable() {
         <Button
           htmlType="button"
           type="default"
-          onClick={() => dispatch(changeMode(Mode.Edit))}
+          onClick={handleEditButtonClick}
         >
           Редактировать
         </Button>
@@ -88,7 +141,7 @@ export function GuidancesTable() {
           htmlType="button"
           type="primary"
           danger
-          onClick={() => dispatch(changeMode(Mode.Delete))}
+          onClick={handleDeleteButtonClick}
         >
           Удалить
         </Button>

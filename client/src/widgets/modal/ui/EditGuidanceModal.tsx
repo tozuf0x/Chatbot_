@@ -5,14 +5,13 @@ import {
   Typography,
   Button,
   Flex,
-  InputRef,
   Select,
   Divider,
 } from 'antd';
 import clsx from 'clsx';
-import { ChangeEvent, KeyboardEvent, Ref, useRef, useState } from 'react';
-import { changeMode } from '@/entities/guidance';
-import { useAppDispatch, focusOnInput } from '@/shared/lib';
+import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { changeMode, selectedGuidancesSelector } from '@/entities/guidance';
+import { useAppDispatch, useAppSelector } from '@/shared/lib';
 import { validationRule } from '../const';
 import { getAppliedAreas } from '../lib/getAppliedAreas';
 import styles from './styles.module.scss';
@@ -23,18 +22,19 @@ const { Title } = Typography;
 const { Item } = Form;
 const { TextArea } = Input;
 
-export function AddGuidanceModal() {
-  const inputRef = useRef();
+export function EditGuidanceModal() {
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
   const appliedAreas = getAppliedAreas(guidances);
   const [currentAppliedAreas, setCurrentAppliedAreas] = useState(appliedAreas);
+  const [selectedGuidance] = useAppSelector(selectedGuidancesSelector);
 
   const initialFormValues = {
-    appliedArea: currentAppliedAreas[0],
+    errorCode: selectedGuidance.errorCode,
+    appliedArea: selectedGuidance.appliedArea,
+    errorText: selectedGuidance.errorText,
+    guidanceText: selectedGuidance.guidanceText,
   };
-
-  const handleModalOpen = (open: boolean) => open && focusOnInput(inputRef);
 
   const handleFormReset = () => {
     form.resetFields();
@@ -70,9 +70,8 @@ export function AddGuidanceModal() {
   };
 
   const handleFormSubmit = (record: IGuidanceData) => {
-    //!TODO: добавить отправку новой записи без закрытия модалки
-    handleFormReset();
-    console.log('Была добавлена новая запись: ', record);
+    //!TODO: добавить отправку отредактированной записи без закрытия модалки
+    console.log('Была отредактирована запись: ', record);
   };
 
   return (
@@ -81,11 +80,10 @@ export function AddGuidanceModal() {
       open
       centered
       footer={false}
-      afterOpenChange={handleModalOpen}
       onCancel={handleModalClose}
     >
       <Title className={styles.title} level={2}>
-        Новая запись
+        Редактирование записи
       </Title>
 
       <Form
@@ -102,7 +100,6 @@ export function AddGuidanceModal() {
           rules={validationRule.ErrorCode}
         >
           <Input
-            ref={inputRef as unknown as Ref<InputRef>}
             className={styles.input}
             name="errorCode"
             maxLength={23}
@@ -185,7 +182,7 @@ export function AddGuidanceModal() {
 
         <Flex className={styles.buttons} justify="center" gap="middle">
           <Button htmlType="submit" type="primary">
-            Добавить
+            Сохранить
           </Button>
 
           <Button

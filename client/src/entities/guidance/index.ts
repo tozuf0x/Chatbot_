@@ -1,3 +1,3 @@
 export { guidanceSlice } from './model/guidanceSlice';
-export { changeMode } from './model/guidanceSlice';
-export { modeSelector } from './model/selectors';
+export { changeMode, changeSelectedGuidances } from './model/guidanceSlice';
+export { modeSelector, selectedGuidancesSelector } from './model/selectors';
