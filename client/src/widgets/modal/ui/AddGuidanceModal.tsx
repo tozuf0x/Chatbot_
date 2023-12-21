@@ -123,6 +123,38 @@ export function AddGuidanceModal() {
 
         <Item
           className={clsx(styles.label, styles.item)}
+          label="Текст ошибки"
+          name="errorText"
+          rules={validationRule.ErrorText}
+        >
+          <TextArea
+            className={styles.textarea}
+            name="errorText"
+            maxLength={73}
+            rows={2}
+            showCount
+            allowClear
+            onChange={handleFieldChange}
+          />
+        </Item>
+
+        <Item
+          className={styles.label}
+          label="Рекомендация"
+          name="guidanceText"
+          rules={validationRule.GuidanceText}
+        >
+          <TextArea
+            className={styles.textarea}
+            name="guidanceText"
+            rows={8}
+            allowClear
+            onChange={handleFieldChange}
+          />
+        </Item>
+
+        <Item
+          className={clsx(styles.label, styles.item)}
           label="Прикладная область"
           name="appliedArea"
         >
@@ -156,38 +188,6 @@ export function AddGuidanceModal() {
                 </Item>
               </>
             )}
-          />
-        </Item>
-
-        <Item
-          className={clsx(styles.label, styles.item)}
-          label="Текст ошибки"
-          name="errorText"
-          rules={validationRule.ErrorText}
-        >
-          <TextArea
-            className={styles.textarea}
-            name="errorText"
-            maxLength={73}
-            rows={2}
-            showCount
-            allowClear
-            onChange={handleFieldChange}
-          />
-        </Item>
-
-        <Item
-          className={styles.label}
-          label="Рекомендация"
-          name="guidanceText"
-          rules={validationRule.GuidanceText}
-        >
-          <TextArea
-            className={styles.textarea}
-            name="guidanceText"
-            rows={8}
-            allowClear
-            onChange={handleFieldChange}
           />
         </Item>
 

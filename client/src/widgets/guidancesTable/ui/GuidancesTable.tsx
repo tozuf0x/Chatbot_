@@ -29,14 +29,6 @@ export function GuidancesTable() {
       width: '15%',
     },
     {
-      title: 'Прикладная область',
-      dataIndex: 'appliedArea',
-      width: '15%',
-      filters: appliedAreaFilters,
-      filterSearch: true,
-      onFilter: (value: boolean | Key, record: IGuidanceData) => record.appliedArea === value,
-    },
-    {
       title: 'Текст ошибки',
       dataIndex: 'errorText',
       width: '35%',
@@ -45,6 +37,14 @@ export function GuidancesTable() {
       title: 'Рекомендация',
       dataIndex: 'guidanceText',
       width: '35%',
+    },
+    {
+      title: 'Прикладная область',
+      dataIndex: 'appliedArea',
+      width: '15%',
+      filters: appliedAreaFilters,
+      filterSearch: true,
+      onFilter: (value: boolean | Key, record: IGuidanceData) => record.appliedArea === value,
     },
   ];
 
