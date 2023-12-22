@@ -20,7 +20,7 @@ export function MainPage() {
 
         <Content className={styles.content}>
           <Title className={styles.title} level={1}>
-            Интерфейс администрирования для ведения базы данных чат-бота
+            Интерфейс администрирования базы данных чат-бота
             поддержки пользователей по&nbsp;ошибкам направления P2P&nbsp;S4
           </Title>
 

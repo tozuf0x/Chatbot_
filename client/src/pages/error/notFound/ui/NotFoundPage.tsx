@@ -27,7 +27,7 @@ export function NotFoundPage() {
           </Text>
         }
         extra={
-          <Button type="primary" shape="round" size="large">
+          <Button type="primary" shape="round" size="middle">
             <Link to={AppRoute.Root}>На главную</Link>
           </Button>
         }

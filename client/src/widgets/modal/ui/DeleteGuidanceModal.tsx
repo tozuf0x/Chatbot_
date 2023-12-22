@@ -23,12 +23,12 @@ export function DeleteGuidanceModal() {
     // if (!isPending) {
     // }
     dispatch(changeMode(Mode.Idle));
+    dispatch(changeSelectedGuidances([]));
   };
 
   const handleDeleteGuidanceSubmit = () => {
-    //!TODO: добавить удаление записей с закрытием модалки, перенести нотифай
+    //!TODO: добавить удаление записей с закрытием модалки, перенести логику внутрь
     handleModalClose();
-    dispatch(changeSelectedGuidances([]));
 
     dispatch(
       changeNotification({
@@ -46,7 +46,8 @@ export function DeleteGuidanceModal() {
       className={styles['modal-dialog']}
       title={
         <Title className={styles.title} level={2}>
-          Вы действительно хотите безвозвратно удалить записи? ({`${selectedGuidances.length}`})
+          Вы действительно хотите безвозвратно удалить выбранные записи?
+          ({`${selectedGuidances.length}`})
         </Title>
       }
       open
