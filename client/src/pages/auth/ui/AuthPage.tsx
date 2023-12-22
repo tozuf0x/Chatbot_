@@ -14,7 +14,6 @@ export function AuthPage() {
 
       <Layout className={styles.layout}>
         <Content className={styles.content}>
-          <h1 className="visually-hidden">Авторизация.</h1>
           <SignInForm />
         </Content>
       </Layout>
