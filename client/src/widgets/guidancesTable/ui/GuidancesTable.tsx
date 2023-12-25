@@ -68,7 +68,6 @@ export function GuidancesTable() {
 
   const handleSelectedGuidancesChange = (_: Key[], records: IGuidanceData[]) => {
     dispatch(changeSelectedGuidances(records));
-    console.log('selectedRecords: ', records);
   };
 
   const rowSelection = {

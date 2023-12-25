@@ -3,9 +3,7 @@ interface FilterItemType {
   value: string;
 }
 
-export const getAppliedAreaFilters = (
-  data: IGuidanceData[] | undefined
-): FilterItemType[] => {
+export const getAppliedAreaFilters = (data: IGuidanceData[] | undefined): FilterItemType[] => {
   if (!data) {
     return [];
   }

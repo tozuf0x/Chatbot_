@@ -14,3 +14,5 @@ export enum Mode {
   Edit = 'edit',
   Delete = 'delete',
 }
+
+export const FIRST_FILTER_NAME = 'Не выбрана';

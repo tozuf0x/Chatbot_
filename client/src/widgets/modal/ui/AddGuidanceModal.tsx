@@ -1,7 +1,7 @@
-import { Form, Button, Flex } from 'antd';
+import { Form, Button, Flex, notification } from 'antd';
 import { useRef } from 'react';
 import { changeMode } from '@/entities/guidance';
-import { useAppDispatch, focusOnInput, changeNotification } from '@/shared/lib';
+import { useAppDispatch, focusOnInput } from '@/shared/lib';
 import { getAppliedAreas } from '../lib/getAppliedAreas';
 import { ModalForm } from './ModalForm';
 import styles from './styles.module.scss';
@@ -11,6 +11,7 @@ import { guidances } from '@/mock/guidances';
 export function AddGuidanceModal() {
   const inputRef = useRef();
   const dispatch = useAppDispatch();
+  const [notificationApi, contextHolder] = notification.useNotification();
   const [form] = Form.useForm();
   const appliedAreas = getAppliedAreas(guidances);
 
@@ -36,46 +37,58 @@ export function AddGuidanceModal() {
     //!TODO: добавить отправку новой записи без закрытия модалки, перенести логику внутрь
     handleFormReset();
 
-    dispatch(
-      changeNotification({
-        type: 'success',
-        title: 'Успех!',
-        text: 'Новая запись была успешно добавлена',
-      })
-    );
+    notificationApi.success({
+      message: 'Успех!',
+      description: 'Новая запись была успешно добавлена',
+      placement: 'topRight',
+    });
 
     console.log('Была добавлена новая запись: ', record);
   };
 
   return (
-    <ModalForm
-      ref={inputRef}
-      form={form}
-      title="Новая запись"
-      initialFormValues={initialFormValues}
-      onModalClose={handleModalClose}
-      onFormSubmit={handleFormSubmit}
-      onModalOpen={handleModalOpen}
-      buttons={
-        <Flex className={styles.buttons} justify="center" gap="middle">
-          <Button htmlType="submit" type="primary">
-            Добавить
-          </Button>
-
-          <Button htmlType="button" type="link" onClick={handleModalClose}>
-            Отменить
-          </Button>
-
-          <Button
-            htmlType="button"
-            type="link"
-            danger
-            onClick={handleFormReset}
+    <>
+      {contextHolder}
+      <ModalForm
+        ref={inputRef}
+        form={form}
+        title="Новая запись"
+        initialFormValues={initialFormValues}
+        onModalClose={handleModalClose}
+        onFormSubmit={handleFormSubmit}
+        onModalOpen={handleModalOpen}
+        buttons={
+          <Flex
+            className={styles.buttons}
+            justify="center"
+            gap="middle"
           >
-            Сбросить
-          </Button>
-        </Flex>
-      }
-    />
+            <Button
+              htmlType="submit"
+              type="primary"
+            >
+              Добавить
+            </Button>
+
+            <Button
+              htmlType="button"
+              type="link"
+              onClick={handleModalClose}
+            >
+              Отменить
+            </Button>
+
+            <Button
+              htmlType="button"
+              type="link"
+              danger
+              onClick={handleFormReset}
+            >
+              Сбросить
+            </Button>
+          </Flex>
+        }
+      />
+    </>
   );
 }

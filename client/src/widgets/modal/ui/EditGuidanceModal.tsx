@@ -1,20 +1,17 @@
-import { Form, Button, Flex } from 'antd';
+import { Form, Button, Flex, notification } from 'antd';
 import {
   changeMode,
   changeSelectedGuidances,
   selectedGuidancesSelector,
 } from '@/entities/guidance';
-import {
-  changeNotification,
-  useAppDispatch,
-  useAppSelector,
-} from '@/shared/lib';
+import { useAppDispatch, useAppSelector } from '@/shared/lib';
 import { ModalForm } from './ModalForm';
 import styles from './styles.module.scss';
 import { Mode } from '@/const';
 
 export function EditGuidanceModal() {
   const dispatch = useAppDispatch();
+  const [notificationApi, contextHolder] = notification.useNotification();
   const [form] = Form.useForm();
   const [selectedGuidance] = useAppSelector(selectedGuidancesSelector);
 
@@ -36,36 +33,48 @@ export function EditGuidanceModal() {
 
   const handleFormSubmit = (record: IGuidanceData) => {
     //!TODO: добавить отправку отредактированной записи без закрытия модалки, перенести логику внутрь
-    dispatch(
-      changeNotification({
-        type: 'success',
-        title: 'Успех!',
-        text: 'Запись была успешно отредактирована',
-      })
-    );
+    notificationApi.success({
+      message: 'Успех!',
+      description: 'Запись была успешно отредактирована',
+      placement: 'topRight',
+    });
 
     console.log('Была отредактирована запись: ', record);
   };
 
   return (
-    <ModalForm
-      ref={undefined}
-      form={form}
-      title="Редактирование записи"
-      initialFormValues={initialFormValues}
-      onModalClose={handleModalClose}
-      onFormSubmit={handleFormSubmit}
-      buttons={
-        <Flex className={styles.buttons} justify="center" gap="middle">
-          <Button htmlType="submit" type="primary">
-            Сохранить
-          </Button>
+    <>
+      {contextHolder}
+      <ModalForm
+        ref={undefined}
+        form={form}
+        title="Редактирование записи"
+        initialFormValues={initialFormValues}
+        onModalClose={handleModalClose}
+        onFormSubmit={handleFormSubmit}
+        buttons={
+          <Flex
+            className={styles.buttons}
+            justify="center"
+            gap="middle"
+          >
+            <Button
+              htmlType="submit"
+              type="primary"
+            >
+              Сохранить
+            </Button>
 
-          <Button htmlType="button" type="link" onClick={handleModalClose}>
-            Отменить
-          </Button>
-        </Flex>
-      }
-    />
+            <Button
+              htmlType="button"
+              type="link"
+              onClick={handleModalClose}
+            >
+              Отменить
+            </Button>
+          </Flex>
+        }
+      />
+    </>
   );
 }
