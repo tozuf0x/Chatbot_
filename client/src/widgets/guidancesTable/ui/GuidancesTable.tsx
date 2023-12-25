@@ -25,16 +25,6 @@ export function GuidancesTable() {
   } = guidanceApi.useGetAllGuidancesQuery(null);
   const appliedAreaFilters = getAppliedAreaFilters(guidances);
 
-  useEffect(() => {
-    if (isError) {
-      notificationApi.error({
-        message: 'Ошибка!',
-        description: 'Не удалось загрузить данные таблицы',
-        placement: 'topRight',
-      });
-    }
-  });
-
   const columnsConfig: ColumnsType<IGuidanceData> = [
     {
       title: 'Код ошибки',
@@ -74,6 +64,16 @@ export function GuidancesTable() {
     selectedRowKeys,
     onChange: handleSelectedGuidancesChange,
   };
+
+  useEffect(() => {
+    if (isError) {
+      notificationApi.error({
+        message: 'Ошибка!',
+        description: 'Не удалось загрузить записи таблицы',
+        placement: 'topRight',
+      });
+    }
+  });
 
   const handleAddButtonClick = () => {
     dispatch(changeMode(Mode.Add));

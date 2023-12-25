@@ -8,7 +8,7 @@
     "lint": "eslint src --ext ts,tsx",
     "preview": "vite preview",
     "test": "jest --coverage",
-    "server": "json-server-auth --watch db.json -p 3001"
+    "server": "json-server-auth db.json --watch --id errorCode -p 3001"
   },
   "dependencies": {
     "@ant-design/icons": "5.2.5",
