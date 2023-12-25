@@ -1,28 +1,41 @@
-import { Button, Flex, Table, TablePaginationConfig } from 'antd';
+import { Button, Flex, notification, Table, TablePaginationConfig } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { Key } from 'react';
+import { Key, useEffect } from 'react';
 import {
   changeMode,
   changeSelectedGuidances,
+  guidanceApi,
   selectedGuidancesSelector,
 } from '@/entities/guidance';
-import {
-  changeNotification,
-  useAppDispatch,
-  useAppSelector,
-} from '@/shared/lib';
+import { useAppDispatch, useAppSelector, scrollToTop } from '@/shared/lib';
 import { getAppliedAreaFilters } from '../lib/getAppliedAreaFilters';
 import styles from './styles.module.scss';
 import { Mode } from '@/const';
-import { guidances } from '@/mock/guidances';
 
 export function GuidancesTable() {
   const dispatch = useAppDispatch();
+  const [notificationApi, contextHolder] = notification.useNotification();
   const selectedGuidances = useAppSelector(selectedGuidancesSelector);
   const selectedRowKeys = selectedGuidances.map((item) => item.errorCode);
+  const {
+    data: guidances,
+    isUninitialized,
+    isLoading,
+    isError,
+  } = guidanceApi.useGetAllGuidancesQuery(null);
   const appliedAreaFilters = getAppliedAreaFilters(guidances);
 
-  const columns: ColumnsType<IGuidanceData> = [
+  useEffect(() => {
+    if (isError) {
+      notificationApi.error({
+        message: 'Ошибка!',
+        description: 'Не удалось загрузить данные таблицы',
+        placement: 'topRight',
+      });
+    }
+  });
+
+  const columnsConfig: ColumnsType<IGuidanceData> = [
     {
       title: 'Код ошибки',
       dataIndex: 'errorCode',
@@ -53,10 +66,7 @@ export function GuidancesTable() {
     pageSizeOptions: [10, 25, 50, 100],
   };
 
-  const handleSelectedGuidancesChange = (
-    _: Key[],
-    records: IGuidanceData[]
-  ) => {
+  const handleSelectedGuidancesChange = (_: Key[], records: IGuidanceData[]) => {
     dispatch(changeSelectedGuidances(records));
     console.log('selectedRecords: ', records);
   };
@@ -72,21 +82,21 @@ export function GuidancesTable() {
 
   const handleEditButtonClick = () => {
     if (selectedGuidances.length === 0) {
-      dispatch(changeNotification({
-        type: 'error',
-        title: 'Ошибка!',
-        text: 'Не выбрана запись для редактирования',
-      }));
+      notificationApi.error({
+        message: 'Ошибка!',
+        description: 'Не выбрана запись для редактирования',
+        placement: 'topRight',
+      });
 
       return;
     }
 
     if (selectedGuidances.length > 1) {
-      dispatch(changeNotification({
-        type: 'error',
-        title: 'Ошибка!',
-        text: 'Нельзя одновременно редактировать несколько записей',
-      }));
+      notificationApi.error({
+        message: 'Ошибка!',
+        description: 'Нельзя одновременно редактировать несколько записей',
+        placement: 'topRight',
+      });
 
       return;
     }
@@ -96,11 +106,11 @@ export function GuidancesTable() {
 
   const handleDeleteButtonClick = () => {
     if (selectedGuidances.length === 0) {
-      dispatch(changeNotification({
-        type: 'error',
-        title: 'Ошибка!',
-        text: 'Не выбраны записи для удаления',
-      }));
+      notificationApi.error({
+        message: 'Ошибка!',
+        description: 'Не выбраны записи для удаления',
+        placement: 'topRight',
+      });
 
       return;
     }
@@ -108,22 +118,32 @@ export function GuidancesTable() {
     dispatch(changeMode(Mode.Delete));
   };
 
+  const handleTableChange = () => scrollToTop();
+
   return (
     <>
+      {contextHolder}
       <Table
         className={styles.table}
-        columns={columns}
+        columns={columnsConfig}
         rowKey={(record) => record.errorCode}
         dataSource={guidances}
         rowSelection={rowSelection}
         pagination={paginationConfig}
+        loading={isUninitialized || isLoading}
         bordered
+        onChange={handleTableChange}
       />
 
-      <Flex className={styles.buttons} justify="center" gap="large">
+      <Flex
+        className={styles.buttons}
+        justify="center"
+        gap="large"
+      >
         <Button
           htmlType="button"
           type="primary"
+          disabled={isUninitialized || isLoading}
           onClick={handleAddButtonClick}
         >
           Добавить
@@ -132,6 +152,7 @@ export function GuidancesTable() {
         <Button
           htmlType="button"
           type="default"
+          disabled={isUninitialized || isLoading}
           onClick={handleEditButtonClick}
         >
           Редактировать
@@ -140,6 +161,7 @@ export function GuidancesTable() {
         <Button
           htmlType="button"
           type="primary"
+          disabled={isUninitialized || isLoading}
           danger
           onClick={handleDeleteButtonClick}
         >
