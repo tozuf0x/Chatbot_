@@ -17,10 +17,10 @@ import {
   forwardRef,
   Ref,
 } from 'react';
+import { guidanceApi } from '@/entities/guidance';
 import { getAppliedAreas } from '../lib/getAppliedAreas';
 import { getValidationRule } from '../lib/getValidationRule';
 import styles from './styles.module.scss';
-import { guidances } from '@/mock/guidances';
 
 const { Title } = Typography;
 const { Item } = Form;
@@ -30,6 +30,7 @@ interface IModal {
   title: string;
   form: FormInstance;
   initialFormValues: { [key: string]: unknown };
+  disabled: boolean;
   buttons: ReactNode;
   onModalClose: () => void;
   onFormSubmit: (record: IGuidanceData) => void;
@@ -42,6 +43,7 @@ export const ModalForm = forwardRef(function ModalForm(
     title,
     form,
     initialFormValues,
+    disabled,
     buttons,
     onModalClose,
     onFormSubmit,
@@ -49,6 +51,7 @@ export const ModalForm = forwardRef(function ModalForm(
   }: IModal,
   ref
 ) {
+  const { data: guidances } = guidanceApi.useGetAllGuidancesQuery(null);
   const appliedAreas = getAppliedAreas(guidances);
   const [currentAppliedAreas, setCurrentAppliedAreas] = useState(appliedAreas);
 
@@ -87,7 +90,10 @@ export const ModalForm = forwardRef(function ModalForm(
     <Modal
       className={styles['modal-form']}
       title={
-        <Title className={styles.title} level={2}>
+        <Title
+          className={styles.title}
+          level={2}
+        >
           {title}
         </Title>
       }
@@ -101,6 +107,7 @@ export const ModalForm = forwardRef(function ModalForm(
         form={form}
         layout="vertical"
         validateTrigger="onSubmit"
+        disabled={disabled}
         initialValues={initialFormValues}
         onFinish={onFormSubmit}
       >

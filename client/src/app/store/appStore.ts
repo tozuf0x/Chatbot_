@@ -1,19 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { createAPI } from '@/shared/api';
+import { guidanceApi } from '@/entities/guidance';
 import { redirect } from '../middlewares/redirect';
 import { rootReducer } from './rootReducer';
 
-const api = createAPI();
-
 export const appStore = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-    thunk: {
-      extraArgument: {
-        api
-      }
-    }
-  }).concat(redirect)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(redirect, guidanceApi.middleware),
 });
 
 export type State = ReturnType<typeof appStore.getState>;
