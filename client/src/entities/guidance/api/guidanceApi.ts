@@ -28,5 +28,13 @@ export const guidanceApi = createApi({
       }),
       invalidatesTags: ['Guidance'],
     }),
+    editGuidance: builder.mutation<IGuidanceData, { oldId: string; body: IGuidanceData }>({
+      query: ({ oldId, body }) => ({
+        url: `${ApiRoute.Guidances}/${oldId}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Guidance'],
+    }),
   }),
 });

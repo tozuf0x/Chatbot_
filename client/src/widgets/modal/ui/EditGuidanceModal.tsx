@@ -2,17 +2,19 @@ import { Form, Button, Flex, notification } from 'antd';
 import {
   changeMode,
   changeSelectedGuidances,
+  guidanceApi,
   selectedGuidancesSelector,
 } from '@/entities/guidance';
 import { useAppDispatch, useAppSelector } from '@/shared/lib';
 import { ModalForm } from './ModalForm';
 import styles from './styles.module.scss';
-import { Mode } from '@/const';
+import { FIRST_FILTER_NAME, Mode } from '@/const';
 
 export function EditGuidanceModal() {
   const dispatch = useAppDispatch();
-  const [notificationApi, contextHolder] = notification.useNotification();
   const [form] = Form.useForm();
+  const [notificationApi, contextHolder] = notification.useNotification();
+  const [editGuidance, { isLoading }] = guidanceApi.useEditGuidanceMutation();
   const [selectedGuidance] = useAppSelector(selectedGuidancesSelector);
 
   const initialFormValues = {
@@ -23,23 +25,47 @@ export function EditGuidanceModal() {
   };
 
   const handleModalClose = () => {
-    //!TODO: добавить запрет закрытия модалки при отправке отредактированной рекомендации
-    // if (!isPending) {
-    // }
-    form.resetFields();
-    dispatch(changeMode(Mode.Idle));
-    dispatch(changeSelectedGuidances([]));
+    if (!isLoading) {
+      form.resetFields();
+      dispatch(changeMode(Mode.Idle));
+      dispatch(changeSelectedGuidances([]));
+    }
   };
 
-  const handleFormSubmit = (record: IGuidanceData) => {
-    //!TODO: добавить отправку отредактированной записи без закрытия модалки, перенести логику внутрь
-    notificationApi.success({
-      message: 'Успех!',
-      description: 'Запись была успешно отредактирована',
-      placement: 'topRight',
-    });
+  const handleFormSubmit = async ({
+    errorCode,
+    errorText,
+    guidanceText,
+    appliedArea,
+  }: IGuidanceData) => {
+    try {
+      //TODO: решить проблему с изменением errorCode
+      const response = await editGuidance({
+        oldId: selectedGuidance.errorCode,
+        body: {
+          errorCode: errorCode.trim(),
+          errorText: errorText.trim(),
+          guidanceText: guidanceText.trim(),
+          appliedArea: appliedArea.trim() === FIRST_FILTER_NAME ? '' : appliedArea.trim(),
+        }
+      });
 
-    console.log('Была отредактирована запись: ', record);
+      if ('error' in response) {
+        throw new Error();
+      }
+
+      notificationApi.success({
+        message: 'Успех!',
+        description: 'Запись была успешно отредактирована',
+        placement: 'topRight',
+      });
+    } catch {
+      notificationApi.error({
+        message: 'Ошибка!',
+        description: 'Не удалось отредактировать запись',
+        placement: 'topRight',
+      });
+    }
   };
 
   return (
@@ -50,8 +76,9 @@ export function EditGuidanceModal() {
         form={form}
         title="Редактирование записи"
         initialFormValues={initialFormValues}
+        disabled={isLoading}
         onModalClose={handleModalClose}
-        onFormSubmit={handleFormSubmit}
+        onFormSubmit={(data) => void handleFormSubmit(data)}
         buttons={
           <Flex
             className={styles.buttons}
@@ -61,6 +88,7 @@ export function EditGuidanceModal() {
             <Button
               htmlType="submit"
               type="primary"
+              loading={isLoading}
             >
               Сохранить
             </Button>
