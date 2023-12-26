@@ -1,8 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { guidanceSlice } from '@/entities/guidance';
-import { notificationSlice } from '@/shared/lib';
+import { guidanceApi, guidanceSlice } from '@/entities/guidance';
 
 export const rootReducer = combineReducers({
-  [notificationSlice.name]: notificationSlice.reducer,
   [guidanceSlice.name]: guidanceSlice.reducer,
+  [guidanceApi.reducerPath]: guidanceApi.reducer,
 });
