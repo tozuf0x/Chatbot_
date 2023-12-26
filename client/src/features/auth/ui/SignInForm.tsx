@@ -40,7 +40,7 @@ export function SignInForm() {
       autoComplete="off"
       onFinish={handleFormSubmit}
     >
-      <Title className={styles.title} level={2}>
+      <Title className={styles.title} level={1}>
         Авторизация
       </Title>
 

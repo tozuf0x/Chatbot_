@@ -1,37 +1,21 @@
-import {
-  Modal,
-  Form,
-  Input,
-  Typography,
-  Button,
-  Flex,
-  InputRef,
-  Select,
-  Divider,
-} from 'antd';
-import clsx from 'clsx';
-import { ChangeEvent, KeyboardEvent, Ref, useRef, useState } from 'react';
-import { changeMode } from '@/entities/guidance';
-import { useAppDispatch, focusOnInput, changeNotification } from '@/shared/lib';
-import { validationRule } from '../const';
-import { getAppliedAreas } from '../lib/getAppliedAreas';
+import { Form, Button, Flex, notification } from 'antd';
+import { useRef } from 'react';
+import { changeMode, guidanceApi } from '@/entities/guidance';
+import { useAppDispatch, focusOnInput } from '@/shared/lib';
+import { ModalForm } from './ModalForm';
 import styles from './styles.module.scss';
+import { FIRST_FILTER_NAME } from '@/const';
 import { Mode } from '@/const';
-import { guidances } from '@/mock/guidances';
-
-const { Title } = Typography;
-const { Item } = Form;
-const { TextArea } = Input;
 
 export function AddGuidanceModal() {
   const inputRef = useRef();
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
-  const appliedAreas = getAppliedAreas(guidances);
-  const [currentAppliedAreas, setCurrentAppliedAreas] = useState(appliedAreas);
+  const [notificationApi, contextHolder] = notification.useNotification();
+  const [addGuidance, { isLoading }] = guidanceApi.useAddGuidanceMutation();
 
   const initialFormValues = {
-    appliedArea: currentAppliedAreas[0],
+    appliedArea: FIRST_FILTER_NAME,
   };
 
   const handleModalOpen = (open: boolean) => open && focusOnInput(inputRef);
@@ -40,176 +24,92 @@ export function AddGuidanceModal() {
     form.resetFields();
   };
 
-  const handleModeReset = () => {
-    dispatch(changeMode(Mode.Idle));
-  };
-
   const handleModalClose = () => {
-    //!TODO: добавить запрет закрытия модалки при отправке новой рекомендации
-    // if (!isPending) {
-    // }
-    handleFormReset();
-    handleModeReset();
-  };
-
-  const handleFieldChange = (
-    evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    form.setFieldsValue({ [evt.target.name]: evt.target.value });
-  };
-
-  const handleAppliedAreaAdd = (evt: KeyboardEvent) => {
-    evt.stopPropagation();
-    evt.preventDefault();
-    const newAppliedArea = (form.getFieldValue('newAppliedArea') as string).trim();
-
-    if (newAppliedArea && !currentAppliedAreas.includes(newAppliedArea)) {
-      setCurrentAppliedAreas([...currentAppliedAreas, newAppliedArea]);
-      form.setFieldValue('newAppliedArea', '');
+    if (!isLoading) {
+      handleFormReset();
+      dispatch(changeMode(Mode.Idle));
     }
   };
 
-  const handleFormSubmit = (record: IGuidanceData) => {
-    //!TODO: добавить отправку новой записи без закрытия модалки, перенести нотифай
-    handleFormReset();
+  const handleFormSubmit = async ({
+    errorCode,
+    errorText,
+    guidanceText,
+    appliedArea,
+  }: IGuidanceData) => {
+    try {
+      const response = await addGuidance({
+        errorCode: errorCode.trim(),
+        errorText: errorText.trim(),
+        guidanceText: guidanceText.trim(),
+        appliedArea: appliedArea.trim() === FIRST_FILTER_NAME ? '' : appliedArea.trim(),
+      });
 
-    dispatch(changeNotification({
-      type: 'success',
-      title: 'Успех!',
-      text: 'Новая запись была успешно добавлена',
-    }));
+      if ('error' in response) {
+        throw new Error();
+      }
 
-    console.log('Была добавлена новая запись: ', record);
+      handleFormReset();
+
+      notificationApi.success({
+        message: 'Успех!',
+        description: 'Новая запись была успешно добавлена',
+        placement: 'topRight',
+      });
+    } catch {
+      notificationApi.error({
+        message: 'Ошибка!',
+        description: 'Не удалось добавить новую запись',
+        placement: 'topRight',
+      });
+    }
   };
 
   return (
-    <Modal
-      className={styles['modal-form']}
-      title={
-        <Title className={styles.title} level={2}>
-          Новая запись
-        </Title>
-      }
-      open
-      centered
-      footer={false}
-      afterOpenChange={handleModalOpen}
-      onCancel={handleModalClose}
-    >
-      <Form
+    <>
+      {contextHolder}
+      <ModalForm
+        ref={inputRef}
         form={form}
-        layout="vertical"
-        onFinish={handleFormSubmit}
-        validateTrigger="onSubmit"
-        initialValues={initialFormValues}
-      >
-        <Item
-          className={clsx(styles.label, styles.item)}
-          label="Код ошибки"
-          name="errorCode"
-          rules={validationRule.ErrorCode}
-        >
-          <Input
-            ref={inputRef as unknown as Ref<InputRef>}
-            className={styles.input}
-            name="errorCode"
-            maxLength={23}
-            placeholder="Например, ERRORCODE123"
-            showCount
-            allowClear
-            onChange={handleFieldChange}
-          />
-        </Item>
-
-        <Item
-          className={clsx(styles.label, styles.item)}
-          label="Текст ошибки"
-          name="errorText"
-          rules={validationRule.ErrorText}
-        >
-          <TextArea
-            className={styles.textarea}
-            name="errorText"
-            maxLength={73}
-            rows={2}
-            showCount
-            allowClear
-            onChange={handleFieldChange}
-          />
-        </Item>
-
-        <Item
-          className={styles.label}
-          label="Рекомендация"
-          name="guidanceText"
-          rules={validationRule.GuidanceText}
-        >
-          <TextArea
-            className={styles.textarea}
-            name="guidanceText"
-            rows={8}
-            allowClear
-            onChange={handleFieldChange}
-          />
-        </Item>
-
-        <Item
-          className={clsx(styles.label, styles.item)}
-          label="Прикладная область"
-          name="appliedArea"
-        >
-          <Select
-            className={styles.select}
-            showSearch
-            options={currentAppliedAreas.map((item) => ({
-              label: item,
-              value: item,
-            }))}
-            dropdownRender={(menu) => (
-              <>
-                {menu}
-                <Divider className={styles.divider} />
-
-                <Item
-                  name="newAppliedArea"
-                  rules={validationRule.NewAppliedArea}
-                  validateTrigger="onChange"
-                >
-                  <Input
-                    className={styles.input}
-                    name="newAppliedArea"
-                    placeholder="Добавить новую прикладную область"
-                    maxLength={20}
-                    showCount
-                    allowClear
-                    onChange={handleFieldChange}
-                    onPressEnter={handleAppliedAreaAdd}
-                  />
-                </Item>
-              </>
-            )}
-          />
-        </Item>
-
-        <Flex className={styles.buttons} justify="center" gap="middle">
-          <Button htmlType="submit" type="primary">
-            Добавить
-          </Button>
-
-          <Button htmlType="button" type="link" onClick={handleModalClose}>
-            Отменить
-          </Button>
-
-          <Button
-            htmlType="button"
-            type="link"
-            danger
-            onClick={handleFormReset}
+        title="Новая запись"
+        initialFormValues={initialFormValues}
+        disabled={isLoading}
+        onModalClose={handleModalClose}
+        onFormSubmit={(data) => void handleFormSubmit(data)}
+        onModalOpen={handleModalOpen}
+        buttons={
+          <Flex
+            className={styles.buttons}
+            justify="center"
+            gap="middle"
           >
-            Сбросить
-          </Button>
-        </Flex>
-      </Form>
-    </Modal>
+            <Button
+              htmlType="submit"
+              type="primary"
+              loading={isLoading}
+            >
+              Добавить
+            </Button>
+
+            <Button
+              htmlType="button"
+              type="link"
+              onClick={handleModalClose}
+            >
+              Отменить
+            </Button>
+
+            <Button
+              htmlType="button"
+              type="link"
+              danger
+              onClick={handleFormReset}
+            >
+              Сбросить
+            </Button>
+          </Flex>
+        }
+      />
+    </>
   );
 }

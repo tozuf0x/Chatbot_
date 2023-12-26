@@ -1,18 +1,18 @@
 import { Layout, Row, Col, Typography, Flex } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import { Logo } from '@/shared/ui';
 import styles from './styles.module.scss';
+import { AppRoute } from '@/const';
 
 const { Link, Text } = Typography;
 
-interface IHeader {
-  isAuthPage?: boolean;
-}
+export function Header() {
+  const navigate = useNavigate();
 
-export function Header({ isAuthPage = false }: IHeader) {
-  //!TODO: реализовать разлогин
-  // const handleSignOut = () => {
-  //   dispatch(signOut());
-  // };
+  const handleSignOut = () => {
+    //!TODO: реализовать разлогин
+    navigate(AppRoute.Auth);
+  };
 
   return (
     <Layout.Header className={styles.header}>
@@ -22,12 +22,12 @@ export function Header({ isAuthPage = false }: IHeader) {
           <Logo width={100} height={40} alt="Логотип Северстали." />
         </Col>
         <Col className={styles['sign-out']} span={10}>
-          {!isAuthPage && (
-            <Flex gap="middle">
-              <Text className={styles.mail}>mock@mockmail.com</Text>
-              <Link className={styles.link}>Выйти</Link>
-            </Flex>
-          )}
+          <Flex gap="middle">
+            <Text className={styles.mail}>mock@mockmail.com</Text>
+            <Link className={styles.link} onClick={handleSignOut}>
+              Выйти
+            </Link>
+          </Flex>
         </Col>
       </Row>
     </Layout.Header>
