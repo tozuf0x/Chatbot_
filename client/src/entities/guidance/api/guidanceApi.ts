@@ -36,5 +36,12 @@ export const guidanceApi = createApi({
       }),
       invalidatesTags: ['Guidance'],
     }),
+    deleteGuidance: builder.mutation<IGuidanceData, string>({
+      query: (id) => ({
+        url: `${ApiRoute.Guidances}/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Guidance'],
+    }),
   }),
 });

@@ -2,6 +2,7 @@ import { Button, Flex, Modal, notification, Typography } from 'antd';
 import {
   changeMode,
   changeSelectedGuidances,
+  guidanceApi,
   selectedGuidancesSelector,
 } from '@/entities/guidance';
 import { useAppDispatch, useAppSelector } from '@/shared/lib';
@@ -12,28 +13,40 @@ const { Title } = Typography;
 
 export function DeleteGuidanceModal() {
   const dispatch = useAppDispatch();
+  const [deleteGuidance, { isLoading }] = guidanceApi.useDeleteGuidanceMutation();
   const [notificationApi, contextHolder] = notification.useNotification();
   const selectedGuidances = useAppSelector(selectedGuidancesSelector);
 
   const handleModalClose = () => {
-    //!TODO: добавить запрет закрытия модалки при удалении записи
-    // if (!isPending) {
-    // }
-    dispatch(changeMode(Mode.Idle));
-    dispatch(changeSelectedGuidances([]));
+    if (!isLoading) {
+      dispatch(changeMode(Mode.Idle));
+      dispatch(changeSelectedGuidances([]));
+    }
   };
 
-  const handleDeleteGuidanceSubmit = () => {
-    //!TODO: добавить удаление записей с закрытием модалки, перенести логику внутрь
-    handleModalClose();
+  const handleDeleteGuidancesSubmit = async () => {
+    try {
+      const response = await Promise.all(selectedGuidances.map((item) => deleteGuidance(item.errorCode)));
+      const hasError = response.find((item) => 'error' in item);
 
-    notificationApi.success({
-      message: 'Успех!',
-      description: 'Записи были успешно удалены',
-      placement: 'topRight',
-    });
+      if (hasError) {
+        throw new Error();
+      }
 
-    console.log('Были удалены записи: ', selectedGuidances);
+      handleModalClose();
+
+      notificationApi.success({
+        message: 'Успех!',
+        description: 'Записи были успешно удалены',
+        placement: 'topRight',
+      });
+    } catch {
+      notificationApi.error({
+        message: 'Ошибка!',
+        description: 'Не удалось удалить записи',
+        placement: 'topRight',
+      });
+    }
   };
 
   return (
@@ -62,8 +75,9 @@ export function DeleteGuidanceModal() {
             <Button
               htmlType="button"
               type="primary"
+              loading={isLoading}
               danger
-              onClick={handleDeleteGuidanceSubmit}
+              onClick={() => void handleDeleteGuidancesSubmit()}
             >
               Удалить
             </Button>
@@ -71,6 +85,7 @@ export function DeleteGuidanceModal() {
             <Button
               htmlType="button"
               type="link"
+              disabled={isLoading}
               onClick={handleModalClose}
             >
               Отменить
