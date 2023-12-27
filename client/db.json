@@ -1,16 +1,14 @@
 {
   "users": [
     {
-      "login": "ak.shaurmin",
-      "password": "qwerty123"
+      "email": "w@mail.ru",
+      "password": "$2a$10$8wV2vvnp4mKjlreBbsiV.edX/iet6yPs2sXiLbBcrHUm0Ai6wIEMK",
+      "errorCode": 1
     },
     {
-      "login": "lo.kekov",
-      "password": "qwerty1234"
-    },
-    {
-      "login": "ml.balticov",
-      "password": "qwerty1234"
+      "email": "s@mail.ru",
+      "password": "$2a$10$vqzukuVJrikaLiu4.5582.5EbjIqMFHbY6xzdxYYuCrguToU.ZqpW",
+      "errorCode": 2
     }
   ],
   "guidances": [
@@ -67,12 +65,6 @@
       "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
       "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
       "appliedArea": "Договор"
-    },
-    {
-      "errorCode": "SOMEERROR135",
-      "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
-      "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
-      "appliedArea": "Заказ на поставку"
     },
     {
       "errorCode": "SOMEERROR136",
@@ -132,6 +124,12 @@
       "errorCode": "qqq123455",
       "errorText": "qqq",
       "guidanceText": "q",
+      "appliedArea": ""
+    },
+    {
+      "errorCode": "qqqq123",
+      "errorText": "weww",
+      "guidanceText": "www",
       "appliedArea": ""
     }
   ]
