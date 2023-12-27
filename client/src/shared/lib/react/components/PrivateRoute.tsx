@@ -1,17 +1,11 @@
 import { Navigate } from 'react-router-dom';
-import { useAppSelector } from '../index';
+import { AppRoute } from '@/const';
 
-type PrivateRouteProps = {
+interface IPrivateRoute {
+  isOpen: boolean;
   children: JSX.Element;
-};
+}
 
-export function PrivateRoute({ children }: PrivateRouteProps) {
-  // const getCurrentUserStatus = useAppSelector((state: State) => state.user.getCurrentUserStatus);
-  // const signInStatus = useAppSelector((state: State) => state.user.signInStatus);
-
-  // return (
-  //   (getCurrentUserStatus === APIStatus.Fulfilled || signInStatus === APIStatus.Fulfilled)
-  //     ? children
-  //     : <Navigate to="/auth" />
-  // );
+export function PrivateRoute({ isOpen, children }: IPrivateRoute) {
+  return isOpen ? children : <Navigate to={AppRoute.Auth} />;
 }
