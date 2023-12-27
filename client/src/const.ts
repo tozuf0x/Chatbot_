@@ -5,7 +5,9 @@ export enum AppRoute {
 }
 
 export enum ApiRoute {
-  Guidances = '/guidances'
+  Guidances = '/guidances',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export enum Mode {

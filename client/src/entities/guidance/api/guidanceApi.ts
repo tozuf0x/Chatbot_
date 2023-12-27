@@ -18,7 +18,7 @@ export const guidanceApi = createApi({
             ? { ...item, appliedArea: FIRST_FILTER_NAME }
             : item
         ),
-      providesTags: (result) => ['Guidance'],
+      providesTags: ['Guidance'],
     }),
     addGuidance: builder.mutation<IGuidanceData, IGuidanceData>({
       query: (body) => ({
