@@ -1,27 +1,25 @@
 import { Rule } from 'antd/es/form';
-
-const requiredErrorMessage = 'Обязательное поле';
-const whitespaceErrorMessage = 'Поле не может состоять только из пробелов';
+import { REQUIRED_ERROR_MESSAGE, WHITESPACE_ERROR_MESSAGE } from '@/shared/ui';
 
 export const ValidationRule: Record<string, Rule[]> = {
   Login: [
     {
       required: true,
-      message: requiredErrorMessage,
+      message: REQUIRED_ERROR_MESSAGE,
     },
     {
       whitespace: true,
-      message: whitespaceErrorMessage,
+      message: WHITESPACE_ERROR_MESSAGE,
     },
   ],
   Password: [
     {
       required: true,
-      message: requiredErrorMessage,
+      message: REQUIRED_ERROR_MESSAGE,
     },
     {
       whitespace: true,
-      message: whitespaceErrorMessage,
-    }
-  ]
+      message: WHITESPACE_ERROR_MESSAGE,
+    },
+  ],
 };

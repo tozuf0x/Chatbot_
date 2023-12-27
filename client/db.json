@@ -1,0 +1,136 @@
+{
+  "users": [
+    {
+      "email": "w@mail.ru",
+      "password": "$2a$10$8wV2vvnp4mKjlreBbsiV.edX/iet6yPs2sXiLbBcrHUm0Ai6wIEMK",
+      "errorCode": 1
+    },
+    {
+      "email": "s@mail.ru",
+      "password": "$2a$10$vqzukuVJrikaLiu4.5582.5EbjIqMFHbY6xzdxYYuCrguToU.ZqpW",
+      "errorCode": 2
+    }
+  ],
+  "guidances": [
+    {
+      "errorCode": "SOMEERROR123",
+      "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
+      "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
+      "appliedArea": "Заказ на поставку"
+    },
+    {
+      "errorCode": "SOMEERROR124",
+      "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
+      "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
+      "appliedArea": "Счет-фактура"
+    },
+    {
+      "errorCode": "SOMEERROR125",
+      "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
+      "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
+      "appliedArea": "Заказ на поставку"
+    },
+    {
+      "errorCode": "SOMEERROR126",
+      "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
+      "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
+      "appliedArea": "Заказ на поставку"
+    },
+    {
+      "errorCode": "SOMEERROR127",
+      "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
+      "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
+      "appliedArea": "Счет-фактура"
+    },
+    {
+      "errorCode": "SOMEERROR128",
+      "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
+      "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
+      "appliedArea": "Договор"
+    },
+    {
+      "errorCode": "SOMEERROR129",
+      "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
+      "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
+      "appliedArea": "Заказ на поставку"
+    },
+    {
+      "errorCode": "SOMEERROR130",
+      "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
+      "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
+      "appliedArea": "Заказ на поставку"
+    },
+    {
+      "errorCode": "SOMEERROR133",
+      "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
+      "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
+      "appliedArea": "Договор"
+    },
+    {
+      "errorCode": "SOMEERROR136",
+      "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
+      "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
+      "appliedArea": "Счет-фактура"
+    },
+    {
+      "errorCode": "SOMEERROR137",
+      "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
+      "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
+      "appliedArea": "Заказ на поставку"
+    },
+    {
+      "errorCode": "SOMEERROR138",
+      "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
+      "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
+      "appliedArea": "Договор"
+    },
+    {
+      "errorCode": "qqq123",
+      "errorText": "q",
+      "guidanceText": "q",
+      "appliedArea": "Прикладная область 4"
+    },
+    {
+      "errorCode": "qqqqqq123",
+      "errorText": "q",
+      "guidanceText": "q",
+      "appliedArea": ""
+    },
+    {
+      "errorCode": "qqq2123",
+      "errorText": "wq",
+      "guidanceText": "q",
+      "appliedArea": ""
+    },
+    {
+      "errorCode": "qq112",
+      "errorText": "qqq",
+      "guidanceText": "q",
+      "appliedArea": ""
+    },
+    {
+      "errorCode": "qwee1234",
+      "errorText": "qq",
+      "guidanceText": "q",
+      "appliedArea": "Договор"
+    },
+    {
+      "errorCode": "q123",
+      "errorText": "q",
+      "guidanceText": "q",
+      "appliedArea": "qq112"
+    },
+    {
+      "errorCode": "qqq123455",
+      "errorText": "qqq",
+      "guidanceText": "q",
+      "appliedArea": ""
+    },
+    {
+      "errorCode": "qqqq123",
+      "errorText": "weww",
+      "guidanceText": "www",
+      "appliedArea": ""
+    }
+  ]
+}
