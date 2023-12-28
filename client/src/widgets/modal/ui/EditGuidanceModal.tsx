@@ -1,4 +1,4 @@
-import { Form, Button, Flex, notification } from 'antd';
+import { Form, Button, Flex } from 'antd';
 import {
   changeMode,
   changeSelectedGuidances,
@@ -13,7 +13,6 @@ import { FIRST_FILTER_NAME, Mode } from '@/const';
 export function EditGuidanceModal() {
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
-  const [notificationApi, contextHolder] = notification.useNotification();
   const [editGuidance, { isLoading }] = guidanceApi.useEditGuidanceMutation();
   const [selectedGuidance] = useAppSelector(selectedGuidancesSelector);
 
@@ -38,71 +37,50 @@ export function EditGuidanceModal() {
     guidanceText,
     appliedArea,
   }: IGuidanceData) => {
-    try {
-      //TODO: решить проблему с изменением errorCode
-      const response = await editGuidance({
-        oldId: selectedGuidance.errorCode,
-        body: {
-          errorCode: errorCode.trim(),
-          errorText: errorText.trim(),
-          guidanceText: guidanceText.trim(),
-          appliedArea: appliedArea.trim() === FIRST_FILTER_NAME ? '' : appliedArea.trim(),
-        }
-      });
-
-      if ('error' in response) {
-        throw new Error();
-      }
-
-      notificationApi.success({
-        message: 'Успех!',
-        description: 'Запись была успешно отредактирована',
-        placement: 'topRight',
-      });
-    } catch {
-      notificationApi.error({
-        message: 'Ошибка!',
-        description: 'Не удалось отредактировать запись',
-        placement: 'topRight',
-      });
-    }
+    //NOTE: errorCode временно не поменять из-за ограничений временного сервера
+    await editGuidance({
+      oldId: selectedGuidance.errorCode,
+      body: {
+        errorCode: errorCode.trim(),
+        errorText: errorText.trim(),
+        guidanceText: guidanceText.trim(),
+        appliedArea: appliedArea.trim() === FIRST_FILTER_NAME ? '' : appliedArea.trim(),
+      },
+    });
   };
 
   return (
-    <>
-      {contextHolder}
-      <ModalForm
-        ref={undefined}
-        form={form}
-        title="Редактирование записи"
-        initialFormValues={initialFormValues}
-        disabled={isLoading}
-        onModalClose={handleModalClose}
-        onFormSubmit={(data) => void handleFormSubmit(data)}
-        buttons={
-          <Flex
-            className={styles.buttons}
-            justify="center"
-            gap="middle"
+    <ModalForm
+      ref={undefined}
+      form={form}
+      title="Редактирование записи"
+      initialFormValues={initialFormValues}
+      disabled={isLoading}
+      onModalClose={handleModalClose}
+      onFormSubmit={(data) => void handleFormSubmit(data)}
+      buttons={
+        <Flex
+          className={styles.buttons}
+          justify="center"
+          gap="middle"
+        >
+          <Button
+            htmlType="submit"
+            type="primary"
+            loading={isLoading}
           >
-            <Button
-              htmlType="submit"
-              type="primary"
-              loading={isLoading}
-            >
-              Сохранить
-            </Button>
+            Сохранить
+          </Button>
 
-            <Button
-              htmlType="button"
-              type="link"
-              onClick={handleModalClose}
-            >
-              Отменить
-            </Button>
-          </Flex>
-        }
-      />
-    </>
+          <Button
+            htmlType="button"
+            type="link"
+            onClick={handleModalClose}
+          >
+            Отменить
+          </Button>
+        </Flex>
+      }
+    />
   );
 }
