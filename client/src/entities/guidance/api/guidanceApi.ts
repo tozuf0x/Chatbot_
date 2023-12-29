@@ -106,7 +106,6 @@ export const guidanceApi = createApi({
         const response = await baseQuery({
           url: `${ApiRoute.Guidances}/${id}`,
           method: 'DELETE',
-          data: id,
         });
 
         if (response.error) {

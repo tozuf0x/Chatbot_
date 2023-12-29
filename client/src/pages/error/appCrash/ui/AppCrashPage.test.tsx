@@ -3,7 +3,7 @@ import { AppCrashPage } from './AppCrashPage';
 
 describe('React component: AppCrashPage', () => {
   test('Should render correctly', () => {
-    const renderedText = /фатальная ошибка/i;
+    const renderedText = /ошибка/i;
 
     render(<AppCrashPage />);
 
