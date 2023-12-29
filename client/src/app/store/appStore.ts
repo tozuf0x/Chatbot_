@@ -1,11 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { authApi } from '@/features/auth';
-import { guidanceApi } from '@/entities/guidance';
+import { middlewares } from '../middlewares';
 import { rootReducer } from './rootReducer';
 
 export const appStore = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(guidanceApi.middleware, authApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(...middlewares),
 });
 
 export type State = ReturnType<typeof appStore.getState>;
