@@ -3,7 +3,9 @@ interface FilterItemType {
   value: string;
 }
 
-export const getAppliedAreaFilters = (data: IGuidanceData[] | undefined): FilterItemType[] => {
+export const getAppliedAreaFilters = (
+  data: IGuidanceData[] | undefined
+): FilterItemType[] => {
   if (!data) {
     return [];
   }
@@ -14,7 +16,9 @@ export const getAppliedAreaFilters = (data: IGuidanceData[] | undefined): Filter
       value: filterItem.appliedArea,
     };
 
-    const hasFilterItem = acc.find((item: FilterItemType) => item.text === newFilterItem.text);
+    const hasFilterItem = acc.find(
+      (item: FilterItemType) => item.text === newFilterItem.text
+    );
 
     if (!hasFilterItem) {
       acc.push(newFilterItem);

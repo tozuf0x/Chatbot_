@@ -1,3 +1,8 @@
+export const API_URL = process.env.VITE_API_URL as string;
+export const AUTH_TOKEN_KEY_NAME = process.env.VITE_AUTH_TOKEN_KEY_NAME as string;
+
+export const FIRST_FILTER_NAME = 'Не выбрана';
+
 export enum AppRoute {
   Root = '/',
   Auth = '/auth',
@@ -16,5 +21,3 @@ export enum Mode {
   Edit = 'edit',
   Delete = 'delete',
 }
-
-export const FIRST_FILTER_NAME = 'Не выбрана';

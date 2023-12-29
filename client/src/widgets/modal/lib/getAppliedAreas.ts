@@ -1,8 +1,6 @@
 import { FIRST_FILTER_NAME } from '@/const';
 
-export const getAppliedAreas = (
-  data: IGuidanceData[] | undefined
-): string[] => {
+export const getAppliedAreas = (data: IGuidanceData[] | undefined): string[] => {
   if (!data) {
     return [];
   }

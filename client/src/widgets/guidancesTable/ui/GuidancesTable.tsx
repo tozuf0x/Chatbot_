@@ -1,27 +1,30 @@
-import { Button, Flex, notification, Table, TablePaginationConfig } from 'antd';
+import { Button, Flex, Table, TablePaginationConfig } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { Key, useEffect } from 'react';
+import { Key } from 'react';
 import {
   changeMode,
   changeSelectedGuidances,
   guidanceApi,
   selectedGuidancesSelector,
 } from '@/entities/guidance';
-import { useAppDispatch, useAppSelector, scrollToTop } from '@/shared/lib';
+import {
+  useAppDispatch,
+  useAppSelector,
+  scrollToTop,
+  changeNotification,
+} from '@/shared/lib';
 import { getAppliedAreaFilters } from '../lib/getAppliedAreaFilters';
 import styles from './styles.module.scss';
 import { Mode } from '@/const';
 
 export function GuidancesTable() {
   const dispatch = useAppDispatch();
-  const [notificationApi, contextHolder] = notification.useNotification();
   const selectedGuidances = useAppSelector(selectedGuidancesSelector);
   const selectedRowKeys = selectedGuidances.map((item) => item.errorCode);
   const {
     data: guidances,
     isUninitialized,
     isLoading,
-    isError,
   } = guidanceApi.useGetAllGuidancesQuery(null);
   const appliedAreaFilters = getAppliedAreaFilters(guidances);
 
@@ -65,37 +68,31 @@ export function GuidancesTable() {
     onChange: handleSelectedGuidancesChange,
   };
 
-  useEffect(() => {
-    if (isError) {
-      notificationApi.error({
-        message: 'Ошибка!',
-        description: 'Не удалось загрузить записи таблицы',
-        placement: 'topRight',
-      });
-    }
-  });
-
   const handleAddButtonClick = () => {
     dispatch(changeMode(Mode.Add));
   };
 
   const handleEditButtonClick = () => {
     if (selectedGuidances.length === 0) {
-      notificationApi.error({
-        message: 'Ошибка!',
-        description: 'Не выбрана запись для редактирования',
-        placement: 'topRight',
-      });
+      dispatch(
+        changeNotification({
+          type: 'error',
+          title: 'Ошибка!',
+          text: 'Не выбрана запись для редактирования',
+        })
+      );
 
       return;
     }
 
     if (selectedGuidances.length > 1) {
-      notificationApi.error({
-        message: 'Ошибка!',
-        description: 'Нельзя одновременно редактировать несколько записей',
-        placement: 'topRight',
-      });
+      dispatch(
+        changeNotification({
+          type: 'error',
+          title: 'Ошибка!',
+          text: 'Нельзя одновременно редактировать несколько записей',
+        })
+      );
 
       return;
     }
@@ -105,11 +102,13 @@ export function GuidancesTable() {
 
   const handleDeleteButtonClick = () => {
     if (selectedGuidances.length === 0) {
-      notificationApi.error({
-        message: 'Ошибка!',
-        description: 'Не выбраны записи для удаления',
-        placement: 'topRight',
-      });
+      dispatch(
+        changeNotification({
+          type: 'error',
+          title: 'Ошибка!',
+          text: 'Не выбраны записи для удаления',
+        })
+      );
 
       return;
     }
@@ -121,7 +120,6 @@ export function GuidancesTable() {
 
   return (
     <>
-      {contextHolder}
       <Table
         className={styles.table}
         columns={columnsConfig}
