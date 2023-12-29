@@ -1,1 +1,1 @@
-export const loginSelector = (state: State) => state.auth.login;
+export const loginSelector = (state: Pick<State, 'auth'>) => state.auth.login;
