@@ -67,12 +67,6 @@
       "appliedArea": "Договор"
     },
     {
-      "errorCode": "SOMEERROR136",
-      "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
-      "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
-      "appliedArea": "Счет-фактура"
-    },
-    {
       "errorCode": "SOMEERROR137",
       "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
       "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
@@ -91,45 +85,15 @@
       "appliedArea": "Прикладная область 4"
     },
     {
-      "errorCode": "qqqqqq123",
-      "errorText": "q",
-      "guidanceText": "q",
-      "appliedArea": ""
-    },
-    {
-      "errorCode": "qqq2123",
-      "errorText": "wq",
-      "guidanceText": "q",
-      "appliedArea": ""
-    },
-    {
-      "errorCode": "qq112",
-      "errorText": "qqq",
-      "guidanceText": "q",
-      "appliedArea": ""
-    },
-    {
-      "errorCode": "qwee1234",
+      "errorCode": "qqq12344",
       "errorText": "qq",
-      "guidanceText": "q",
-      "appliedArea": "Договор"
-    },
-    {
-      "errorCode": "q123",
-      "errorText": "q",
-      "guidanceText": "q",
-      "appliedArea": "qq112"
-    },
-    {
-      "errorCode": "qqq123455",
-      "errorText": "qqq",
-      "guidanceText": "q",
+      "guidanceText": "qqq",
       "appliedArea": ""
     },
     {
-      "errorCode": "qqqq123",
-      "errorText": "weww",
-      "guidanceText": "www",
+      "errorCode": "qqwe2233",
+      "errorText": "qwq",
+      "guidanceText": "q",
       "appliedArea": ""
     }
   ]

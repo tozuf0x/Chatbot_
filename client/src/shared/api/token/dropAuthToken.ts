@@ -1,3 +1,3 @@
-const AUTH_TOKEN_KEY_NAME = process.env.VITE_AUTH_TOKEN_KEY_NAME as string;
+import { AUTH_TOKEN_KEY_NAME } from '@/const';
 
 export const dropAuthToken = () => localStorage.removeItem(AUTH_TOKEN_KEY_NAME);

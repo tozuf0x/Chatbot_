@@ -16,7 +16,7 @@ export function Header() {
 
   const handleSignOut = () => {
     try {
-      //!TODO: временный сервер не предоставляет разлогин
+      //NOTE: временный сервер не предоставляет разлогин
       // const response = await logout(null);
 
       // if ('error' in response) {
