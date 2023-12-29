@@ -1,2 +1,4 @@
-export { createAPI } from './axios/createAPI';
-export { APIStatus } from './const';
+export { dropAuthToken } from './token/dropAuthToken';
+export { getAuthToken } from './token/getAuthToken';
+export { saveAuthToken } from './token/saveAuthToken';
+export { axiosBaseQuery } from './axios/axiosBaseQuery';

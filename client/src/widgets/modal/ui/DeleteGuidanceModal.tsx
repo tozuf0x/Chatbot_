@@ -2,13 +2,10 @@ import { Button, Flex, Modal, Typography } from 'antd';
 import {
   changeMode,
   changeSelectedGuidances,
+  guidanceApi,
   selectedGuidancesSelector,
 } from '@/entities/guidance';
-import {
-  changeNotification,
-  useAppDispatch,
-  useAppSelector,
-} from '@/shared/lib';
+import { useAppDispatch, useAppSelector } from '@/shared/lib';
 import styles from './styles.module.scss';
 import { Mode } from '@/const';
 
@@ -16,55 +13,66 @@ const { Title } = Typography;
 
 export function DeleteGuidanceModal() {
   const dispatch = useAppDispatch();
+  const [deleteGuidance, { isLoading }] = guidanceApi.useDeleteGuidanceMutation();
   const selectedGuidances = useAppSelector(selectedGuidancesSelector);
 
   const handleModalClose = () => {
-    //!TODO: добавить запрет закрытия модалки при удалении записи
-    // if (!isPending) {
-    // }
-    dispatch(changeMode(Mode.Idle));
-    dispatch(changeSelectedGuidances([]));
+    if (!isLoading) {
+      dispatch(changeMode(Mode.Idle));
+      dispatch(changeSelectedGuidances([]));
+    }
   };
 
-  const handleDeleteGuidanceSubmit = () => {
-    //!TODO: добавить удаление записей с закрытием модалки, перенести логику внутрь
-    handleModalClose();
+  const handleDeleteGuidancesSubmit = () => {
+    try {
+      // eslint-disable-next-line sonarjs/no-ignored-return
+      selectedGuidances.map(
+        async (item) => await deleteGuidance(item.errorCode).unwrap()
+      );
 
-    dispatch(
-      changeNotification({
-        type: 'success',
-        title: 'Успех!',
-        text: 'Записи были успешно удалены',
-      })
-    );
-
-    console.log('Были удалены записи: ', selectedGuidances);
+      handleModalClose();
+    } catch {
+      throw new Error();
+    }
   };
 
   return (
     <Modal
       className={styles['modal-dialog']}
       title={
-        <Title className={styles.title} level={2}>
-          Вы действительно хотите безвозвратно удалить выбранные записи?
-          ({`${selectedGuidances.length}`})
+        <Title
+          className={styles.title}
+          level={2}
+        >
+          Вы действительно хотите безвозвратно удалить выбранные записи? (
+          {`${selectedGuidances.length}`})
         </Title>
       }
       open
       centered
       onCancel={handleModalClose}
       footer={[
-        <Flex key="buttons" className={styles.buttons} justify="center">
+        <Flex
+          key="buttons"
+          className={styles.buttons}
+          justify="center"
+        >
           <Button
             htmlType="button"
             type="primary"
+            loading={isLoading}
             danger
-            onClick={handleDeleteGuidanceSubmit}
+            onClick={handleDeleteGuidancesSubmit}
           >
             Удалить
           </Button>
 
-          <Button htmlType="button" type="link" onClick={handleModalClose}>
+          <Button
+            htmlType="button"
+            type="link"
+            disabled={isLoading}
+            onClick={handleModalClose}
+          >
             Отменить
           </Button>
         </Flex>,

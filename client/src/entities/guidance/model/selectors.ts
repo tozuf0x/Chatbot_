@@ -1,2 +1,2 @@
-export const modeSelector = (state: State) => state.guidance.mode;
-export const selectedGuidancesSelector = (state: State) => state.guidance.selectedGuidances;
+export const modeSelector = (state: Pick<State, 'guidance'>) => state.guidance.mode;
+export const selectedGuidancesSelector = (state: Pick<State, 'guidance'>) => state.guidance.selectedGuidances;

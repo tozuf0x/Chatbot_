@@ -1,21 +1,20 @@
 import { Form, Button, Flex } from 'antd';
 import { useRef } from 'react';
-import { changeMode } from '@/entities/guidance';
-import { useAppDispatch, focusOnInput, changeNotification } from '@/shared/lib';
-import { getAppliedAreas } from '../lib/getAppliedAreas';
+import { changeMode, guidanceApi } from '@/entities/guidance';
+import { useAppDispatch, focusOnInput } from '@/shared/lib';
 import { ModalForm } from './ModalForm';
 import styles from './styles.module.scss';
+import { FIRST_FILTER_NAME } from '@/const';
 import { Mode } from '@/const';
-import { guidances } from '@/mock/guidances';
 
 export function AddGuidanceModal() {
   const inputRef = useRef();
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
-  const appliedAreas = getAppliedAreas(guidances);
+  const [addGuidance, { isLoading }] = guidanceApi.useAddGuidanceMutation();
 
   const initialFormValues = {
-    appliedArea: appliedAreas[0],
+    appliedArea: FIRST_FILTER_NAME,
   };
 
   const handleModalOpen = (open: boolean) => open && focusOnInput(inputRef);
@@ -25,26 +24,30 @@ export function AddGuidanceModal() {
   };
 
   const handleModalClose = () => {
-    //!TODO: добавить запрет закрытия модалки при отправке новой рекомендации
-    // if (!isPending) {
-    // }
-    handleFormReset();
-    dispatch(changeMode(Mode.Idle));
+    if (!isLoading) {
+      handleFormReset();
+      dispatch(changeMode(Mode.Idle));
+    }
   };
 
-  const handleFormSubmit = (record: IGuidanceData) => {
-    //!TODO: добавить отправку новой записи без закрытия модалки, перенести логику внутрь
-    handleFormReset();
+  const handleAddGuidanceSubmit = async ({
+    errorCode,
+    errorText,
+    guidanceText,
+    appliedArea,
+  }: IGuidanceData) => {
+    try {
+      await addGuidance({
+        errorCode: errorCode.trim(),
+        errorText: errorText.trim(),
+        guidanceText: guidanceText.trim(),
+        appliedArea: appliedArea.trim() === FIRST_FILTER_NAME ? '' : appliedArea.trim(),
+      }).unwrap();
 
-    dispatch(
-      changeNotification({
-        type: 'success',
-        title: 'Успех!',
-        text: 'Новая запись была успешно добавлена',
-      })
-    );
-
-    console.log('Была добавлена новая запись: ', record);
+      handleFormReset();
+    } catch {
+      throw new Error();
+    }
   };
 
   return (
@@ -53,16 +56,29 @@ export function AddGuidanceModal() {
       form={form}
       title="Новая запись"
       initialFormValues={initialFormValues}
+      disabled={isLoading}
       onModalClose={handleModalClose}
-      onFormSubmit={handleFormSubmit}
+      onFormSubmit={(data) => void handleAddGuidanceSubmit(data)}
       onModalOpen={handleModalOpen}
       buttons={
-        <Flex className={styles.buttons} justify="center" gap="middle">
-          <Button htmlType="submit" type="primary">
+        <Flex
+          className={styles.buttons}
+          justify="center"
+          gap="middle"
+        >
+          <Button
+            htmlType="submit"
+            type="primary"
+            loading={isLoading}
+          >
             Добавить
           </Button>
 
-          <Button htmlType="button" type="link" onClick={handleModalClose}>
+          <Button
+            htmlType="button"
+            type="link"
+            onClick={handleModalClose}
+          >
             Отменить
           </Button>
 

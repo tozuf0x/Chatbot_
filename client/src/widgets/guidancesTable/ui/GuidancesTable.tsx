@@ -4,25 +4,31 @@ import { Key } from 'react';
 import {
   changeMode,
   changeSelectedGuidances,
+  guidanceApi,
   selectedGuidancesSelector,
 } from '@/entities/guidance';
 import {
-  changeNotification,
   useAppDispatch,
   useAppSelector,
+  scrollToTop,
+  changeNotification,
 } from '@/shared/lib';
 import { getAppliedAreaFilters } from '../lib/getAppliedAreaFilters';
 import styles from './styles.module.scss';
 import { Mode } from '@/const';
-import { guidances } from '@/mock/guidances';
 
 export function GuidancesTable() {
   const dispatch = useAppDispatch();
   const selectedGuidances = useAppSelector(selectedGuidancesSelector);
   const selectedRowKeys = selectedGuidances.map((item) => item.errorCode);
+  const {
+    data: guidances,
+    isUninitialized,
+    isLoading,
+  } = guidanceApi.useGetAllGuidancesQuery(null);
   const appliedAreaFilters = getAppliedAreaFilters(guidances);
 
-  const columns: ColumnsType<IGuidanceData> = [
+  const columnsConfig: ColumnsType<IGuidanceData> = [
     {
       title: 'Код ошибки',
       dataIndex: 'errorCode',
@@ -53,12 +59,8 @@ export function GuidancesTable() {
     pageSizeOptions: [10, 25, 50, 100],
   };
 
-  const handleSelectedGuidancesChange = (
-    _: Key[],
-    records: IGuidanceData[]
-  ) => {
+  const handleSelectedGuidancesChange = (_: Key[], records: IGuidanceData[]) => {
     dispatch(changeSelectedGuidances(records));
-    console.log('selectedRecords: ', records);
   };
 
   const rowSelection = {
@@ -72,21 +74,25 @@ export function GuidancesTable() {
 
   const handleEditButtonClick = () => {
     if (selectedGuidances.length === 0) {
-      dispatch(changeNotification({
-        type: 'error',
-        title: 'Ошибка!',
-        text: 'Не выбрана запись для редактирования',
-      }));
+      dispatch(
+        changeNotification({
+          type: 'error',
+          title: 'Ошибка!',
+          text: 'Не выбрана запись для редактирования',
+        })
+      );
 
       return;
     }
 
     if (selectedGuidances.length > 1) {
-      dispatch(changeNotification({
-        type: 'error',
-        title: 'Ошибка!',
-        text: 'Нельзя одновременно редактировать несколько записей',
-      }));
+      dispatch(
+        changeNotification({
+          type: 'error',
+          title: 'Ошибка!',
+          text: 'Нельзя одновременно редактировать несколько записей',
+        })
+      );
 
       return;
     }
@@ -96,11 +102,13 @@ export function GuidancesTable() {
 
   const handleDeleteButtonClick = () => {
     if (selectedGuidances.length === 0) {
-      dispatch(changeNotification({
-        type: 'error',
-        title: 'Ошибка!',
-        text: 'Не выбраны записи для удаления',
-      }));
+      dispatch(
+        changeNotification({
+          type: 'error',
+          title: 'Ошибка!',
+          text: 'Не выбраны записи для удаления',
+        })
+      );
 
       return;
     }
@@ -108,22 +116,31 @@ export function GuidancesTable() {
     dispatch(changeMode(Mode.Delete));
   };
 
+  const handleTableChange = () => scrollToTop();
+
   return (
     <>
       <Table
         className={styles.table}
-        columns={columns}
+        columns={columnsConfig}
         rowKey={(record) => record.errorCode}
         dataSource={guidances}
         rowSelection={rowSelection}
         pagination={paginationConfig}
+        loading={isUninitialized || isLoading}
         bordered
+        onChange={handleTableChange}
       />
 
-      <Flex className={styles.buttons} justify="center" gap="large">
+      <Flex
+        className={styles.buttons}
+        justify="center"
+        gap="large"
+      >
         <Button
           htmlType="button"
           type="primary"
+          disabled={isUninitialized || isLoading}
           onClick={handleAddButtonClick}
         >
           Добавить
@@ -132,6 +149,7 @@ export function GuidancesTable() {
         <Button
           htmlType="button"
           type="default"
+          disabled={isUninitialized || isLoading}
           onClick={handleEditButtonClick}
         >
           Редактировать
@@ -140,6 +158,7 @@ export function GuidancesTable() {
         <Button
           htmlType="button"
           type="primary"
+          disabled={isUninitialized || isLoading}
           danger
           onClick={handleDeleteButtonClick}
         >
