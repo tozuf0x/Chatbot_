@@ -1,18 +1,18 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getAuthToken } from '@/shared/api';
-import { ApiRoute } from '@/const';
-
-const API_URL = process.env.VITE_API_URL;
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { axiosBaseQuery, getAuthToken, dropAuthToken, saveAuthToken } from '@/shared/api';
+import { changeNotification, redirectToRoute } from '@/shared/lib';
+import { setLogin } from '../model/authSlice';
+import { ApiRoute, API_URL, AppRoute } from '@/const';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({
+  baseQuery: axiosBaseQuery({
     baseUrl: API_URL,
-    prepareHeaders: (headers) => {
+    headers: (headers) => {
       const token = getAuthToken();
 
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+        headers['Authorization'] = `Bearer ${token}`;
       }
 
       return headers;
@@ -20,25 +20,70 @@ export const authApi = createApi({
   }),
   endpoints: (builder) => ({
     getCurrentUser: builder.query<IAuthData, null>({
-      query: () => ({
-        url: '/users/1',
-      }),
+      queryFn: async (_args, _baseQueryApi, _extraOptions, baseQuery) => {
+        const response = await baseQuery({
+          url: '/users/1',
+          method: 'GET',
+        });
+
+        if (response.error) {
+          return { error: response.error };
+        }
+
+        return { data: response.data as IAuthData };
+      },
     }),
     login: builder.mutation<IAuthResponse, IAuthData>({
-      query: (body) => ({
-        url: ApiRoute.Login,
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }),
+      queryFn: async (body, { dispatch }, _extraOptions, baseQuery) => {
+        const response = await baseQuery({
+          url: ApiRoute.Login,
+          method: 'POST',
+          data: body,
+        });
+
+        if (response.error) {
+          dispatch(
+            changeNotification({
+              type: 'error',
+              title: 'Ошибка!',
+              text: 'Не удалось авторизоваться',
+            })
+          );
+
+          return { error: response.error };
+        }
+
+        saveAuthToken((response.data as IAuthResponse).accessToken);
+        dispatch(setLogin((response.data as IAuthResponse).user.email));
+        dispatch(redirectToRoute(AppRoute.Root));
+
+        return { data: response.data as IAuthResponse };
+      },
     }),
     logout: builder.mutation<IAuthData, null>({
-      query: () => ({
-        url: ApiRoute.Logout,
-        method: 'DELETE',
-      }),
+      queryFn: async (_args, { dispatch }, _extraOptions, baseQuery) => {
+        const response = await baseQuery({
+          url: ApiRoute.Logout,
+          method: 'DELETE',
+        });
+
+        if (response.error) {
+          dispatch(
+            changeNotification({
+              type: 'error',
+              title: 'Ошибка!',
+              text: 'Не удалось разлогиниться',
+            })
+          );
+
+          return { error: response.error };
+        }
+
+        dropAuthToken();
+        dispatch(setLogin(null));
+
+        return { data: response.data as IAuthData };
+      },
     }),
   }),
 });

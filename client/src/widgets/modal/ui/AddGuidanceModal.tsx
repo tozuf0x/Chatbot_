@@ -4,8 +4,7 @@ import { changeMode, guidanceApi } from '@/entities/guidance';
 import { useAppDispatch, focusOnInput } from '@/shared/lib';
 import { ModalForm } from './ModalForm';
 import styles from './styles.module.scss';
-import { FIRST_FILTER_NAME } from '@/const';
-import { Mode } from '@/const';
+import { FIRST_FILTER_NAME, Mode } from '@/const';
 
 export function AddGuidanceModal() {
   const inputRef = useRef();

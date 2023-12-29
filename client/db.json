@@ -82,7 +82,7 @@
       "errorCode": "qqq123",
       "errorText": "q",
       "guidanceText": "q",
-      "appliedArea": "Прикладная область 4"
+      "appliedArea": "Счет-фактура"
     },
     {
       "errorCode": "qqq12344",
@@ -91,10 +91,28 @@
       "appliedArea": ""
     },
     {
-      "errorCode": "qqwe2233",
-      "errorText": "qwq",
+      "errorCode": "www1222",
+      "errorText": "ww12w2",
+      "guidanceText": "2ww2ww",
+      "appliedArea": "Договор"
+    },
+    {
+      "errorCode": "qqq123222",
+      "errorText": "qq",
       "guidanceText": "q",
       "appliedArea": ""
+    },
+    {
+      "errorCode": "qqqqqqqqqqq111",
+      "errorText": "q",
+      "guidanceText": "q",
+      "appliedArea": ""
+    },
+    {
+      "errorCode": "qqqq1111111",
+      "errorText": "2",
+      "guidanceText": "2",
+      "appliedArea": "Счет-фактура"
     }
   ]
 }
