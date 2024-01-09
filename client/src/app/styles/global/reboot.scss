@@ -23,3 +23,7 @@ img {
 a {
   transition: all $trans-300;
 }
+
+textarea {
+  resize: none !important;
+}
