@@ -62,12 +62,12 @@ export const ModalForm = forwardRef(function ModalForm(
   };
 
   const handleAppliedAreaAdd = (evt: KeyboardEvent) => {
-    evt.stopPropagation();
     evt.preventDefault();
     const newAppliedArea = (form.getFieldValue('newAppliedArea') as string).trim();
 
     if (newAppliedArea && !currentAppliedAreas.includes(newAppliedArea)) {
       setCurrentAppliedAreas([...currentAppliedAreas, newAppliedArea]);
+      form.setFieldValue('appliedArea', newAppliedArea);
       form.setFieldValue('newAppliedArea', '');
     }
   };
