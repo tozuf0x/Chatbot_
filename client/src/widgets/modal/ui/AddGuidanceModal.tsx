@@ -1,10 +1,10 @@
 import { Form, Button, Flex } from 'antd';
 import { useRef } from 'react';
-import { changeMode, guidanceApi } from '@/entities/guidance';
+import { changeMode, guidanceApi, FIRST_FILTER_NAME } from '@/entities/guidance';
 import { useAppDispatch, focusOnInput } from '@/shared/lib';
 import { ModalForm } from './ModalForm';
 import styles from './styles.module.scss';
-import { FIRST_FILTER_NAME, Mode } from '@/const';
+import { Mode } from '@/const';
 
 export function AddGuidanceModal() {
   const inputRef = useRef();

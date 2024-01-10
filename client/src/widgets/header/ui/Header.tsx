@@ -22,7 +22,10 @@ export function Header() {
   };
 
   return (
-    <Layout.Header className={styles.header}>
+    <Layout.Header
+      className={styles.header}
+      data-testid="header"
+    >
       <Row
         justify="center"
         gutter={10}

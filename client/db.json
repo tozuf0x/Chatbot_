@@ -113,6 +113,48 @@
       "errorText": "2",
       "guidanceText": "2",
       "appliedArea": "Счет-фактура"
+    },
+    {
+      "errorCode": "ddddq2222",
+      "errorText": "22",
+      "guidanceText": "22",
+      "appliedArea": "Договор"
+    },
+    {
+      "errorCode": "dddd222",
+      "errorText": "2222",
+      "guidanceText": "22222222",
+      "appliedArea": "Договор"
+    },
+    {
+      "errorCode": "dddddddddddddddd2222",
+      "errorText": "1",
+      "guidanceText": "11",
+      "appliedArea": "Счет-фактура"
+    },
+    {
+      "errorCode": "ddddd222",
+      "errorText": "2",
+      "guidanceText": "2",
+      "appliedArea": ""
+    },
+    {
+      "errorCode": "ddd222",
+      "errorText": "dd",
+      "guidanceText": "dd",
+      "appliedArea": ""
+    },
+    {
+      "errorCode": "wwww111",
+      "errorText": "11",
+      "guidanceText": "11",
+      "appliedArea": ""
+    },
+    {
+      "errorCode": "ww123",
+      "errorText": "22",
+      "guidanceText": "22",
+      "appliedArea": "Покупка"
     }
   ]
 }
