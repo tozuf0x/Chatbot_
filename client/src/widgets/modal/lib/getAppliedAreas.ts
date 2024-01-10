@@ -2,7 +2,7 @@ import { FIRST_FILTER_NAME } from '@/entities/guidance';
 
 export const getAppliedAreas = (data: IGuidanceData[] | undefined): string[] => {
   if (!data) {
-    return [];
+    return [FIRST_FILTER_NAME];
   }
 
   return data.reduce(
