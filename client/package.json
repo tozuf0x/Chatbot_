@@ -30,6 +30,7 @@
     "@jedmao/redux-mock-store": "3.0.5",
     "@testing-library/jest-dom": "6.1.2",
     "@testing-library/react": "14.0.0",
+    "@testing-library/user-event": "14.5.2",
     "@types/compose-function": "0.0.30",
     "@types/jest": "29.5.6",
     "@types/node": "20.5.4",

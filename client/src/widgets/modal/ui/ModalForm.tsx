@@ -55,6 +55,11 @@ export const ModalForm = forwardRef(function ModalForm(
   const appliedAreas = getAppliedAreas(guidances);
   const [currentAppliedAreas, setCurrentAppliedAreas] = useState(appliedAreas);
 
+  const appliedAreasSelectOptions = currentAppliedAreas.map((item) => ({
+    label: item,
+    value: item,
+  }));
+
   const handleFieldChange = (
     evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -62,12 +67,12 @@ export const ModalForm = forwardRef(function ModalForm(
   };
 
   const handleAppliedAreaAdd = (evt: KeyboardEvent) => {
-    evt.stopPropagation();
     evt.preventDefault();
     const newAppliedArea = (form.getFieldValue('newAppliedArea') as string).trim();
 
     if (newAppliedArea && !currentAppliedAreas.includes(newAppliedArea)) {
       setCurrentAppliedAreas([...currentAppliedAreas, newAppliedArea]);
+      form.setFieldValue('appliedArea', newAppliedArea);
       form.setFieldValue('newAppliedArea', '');
     }
   };
@@ -119,7 +124,6 @@ export const ModalForm = forwardRef(function ModalForm(
         >
           <Input
             ref={ref as unknown as Ref<InputRef>}
-            className={styles.input}
             name="errorCode"
             maxLength={23}
             placeholder="Например, ERRORCODE123"
@@ -136,7 +140,6 @@ export const ModalForm = forwardRef(function ModalForm(
           rules={ValidationRule.ErrorText}
         >
           <TextArea
-            className={styles.textarea}
             name="errorText"
             maxLength={73}
             rows={2}
@@ -153,7 +156,6 @@ export const ModalForm = forwardRef(function ModalForm(
           rules={ValidationRule.GuidanceText}
         >
           <TextArea
-            className={styles.textarea}
             name="guidanceText"
             rows={8}
             allowClear
@@ -167,12 +169,8 @@ export const ModalForm = forwardRef(function ModalForm(
           name="appliedArea"
         >
           <Select
-            className={styles.select}
+            options={appliedAreasSelectOptions}
             showSearch
-            options={currentAppliedAreas.map((item) => ({
-              label: item,
-              value: item,
-            }))}
             onBlur={handleSelectBlur}
             dropdownRender={(menu) => (
               <>
@@ -185,7 +183,6 @@ export const ModalForm = forwardRef(function ModalForm(
                   validateTrigger="onChange"
                 >
                   <Input
-                    className={styles.input}
                     name="newAppliedArea"
                     placeholder="Добавить новую прикладную область"
                     maxLength={20}
