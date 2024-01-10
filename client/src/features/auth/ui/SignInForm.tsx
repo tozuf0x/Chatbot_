@@ -61,6 +61,7 @@ export function SignInForm() {
           className={styles.input}
           allowClear
           onChange={handleFieldChange}
+          data-testid="loginInput"
         />
       </Item>
 
@@ -74,6 +75,7 @@ export function SignInForm() {
           className={styles.input}
           allowClear
           onChange={handleFieldChange}
+          data-testid="passwordInput"
         />
       </Item>
 

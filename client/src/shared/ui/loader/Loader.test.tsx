@@ -1,5 +1,13 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '../../tests';
 import { Loader } from './Loader';
+
+jest.mock('@/app/store/appStore', () => ({
+  appStore: {
+    getState: () => null,
+    subscribe: () => null,
+    unsubscribe: () => null,
+  },
+}));
 
 describe('React component: Loader', () => {
   test('Should render correctly', () => {
