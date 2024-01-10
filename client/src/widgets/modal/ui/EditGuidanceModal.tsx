@@ -4,11 +4,12 @@ import {
   changeSelectedGuidances,
   guidanceApi,
   selectedGuidancesSelector,
+  FIRST_FILTER_NAME
 } from '@/entities/guidance';
 import { useAppDispatch, useAppSelector } from '@/shared/lib';
 import { ModalForm } from './ModalForm';
 import styles from './styles.module.scss';
-import { FIRST_FILTER_NAME, Mode } from '@/const';
+import { Mode } from '@/const';
 
 export function EditGuidanceModal() {
   const dispatch = useAppDispatch();

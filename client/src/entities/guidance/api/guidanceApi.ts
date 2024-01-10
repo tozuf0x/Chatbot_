@@ -1,7 +1,8 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { axiosBaseQuery } from '@/shared/api';
 import { changeNotification } from '@/shared/lib';
-import { ApiRoute, FIRST_FILTER_NAME, API_URL } from '@/const';
+import { FIRST_FILTER_NAME } from '../const';
+import { ApiRoute, API_URL } from '@/const';
 
 export const guidanceApi = createApi({
   reducerPath: 'guidanceApi',
