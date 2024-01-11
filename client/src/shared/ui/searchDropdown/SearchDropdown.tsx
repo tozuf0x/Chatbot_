@@ -41,6 +41,7 @@ export function SearchDropdown(
         value={selectedKeys[0]}
         placeholder={placeholder}
         onChange={handleInputChange}
+        onPressEnter={handleClose}
       />
 
       <Space>
