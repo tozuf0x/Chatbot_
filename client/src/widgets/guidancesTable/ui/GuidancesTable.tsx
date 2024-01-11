@@ -1,3 +1,4 @@
+import { SearchOutlined } from '@ant-design/icons';
 import { Button, Flex, Table, TablePaginationConfig } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Key } from 'react';
@@ -14,6 +15,7 @@ import {
   changeNotification,
 } from '@/shared/lib';
 import { getAppliedAreaFilters } from '../lib/getAppliedAreaFilters';
+import { SearchDropdown } from './SearchDropdown';
 import styles from './styles.module.scss';
 import { Mode } from '@/const';
 
@@ -33,6 +35,12 @@ export function GuidancesTable() {
       title: 'Код ошибки',
       dataIndex: 'errorCode',
       width: '15%',
+      filterIcon: <SearchOutlined />,
+      filterDropdown: SearchDropdown,
+      onFilter: (value: boolean | Key, { errorCode }: IGuidanceData) =>
+        errorCode
+          .toLowerCase()
+          .includes((value as string).toLowerCase()),
     },
     {
       title: 'Текст ошибки',
@@ -50,7 +58,7 @@ export function GuidancesTable() {
       width: '15%',
       filters: appliedAreaFilters,
       filterSearch: true,
-      onFilter: (value: boolean | Key, record: IGuidanceData) => record.appliedArea === value,
+      onFilter: (value: boolean | Key, { appliedArea }: IGuidanceData) => appliedArea === value,
     },
   ];
 
