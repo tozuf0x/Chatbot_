@@ -17,12 +17,27 @@
   top: 54px;
   z-index: 999;
 
-  height: 67px;
+  height: 41px;
   margin: 0 !important;
-  padding: 20px 0 25px 0 !important;
+  padding: 20px 0 0 0 !important;
 
   font-size: 18px !important;
   text-align: center;
 
   background-color: $color-default-white;
+}
+
+.divider-wrapper {
+  position: sticky;
+  top: 95px;
+  z-index: 999;
+
+  height: 41px;
+  padding: 20px 0;
+
+  background-color: $color-default-white;
+}
+
+.divider {
+  margin: 0;
 }

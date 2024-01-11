@@ -16,6 +16,7 @@ import {
   changeNotification,
 } from '@/shared/lib';
 import { SearchDropdown } from '@/shared/ui';
+import { STICKY_TABLE_HEADER_OFFSET } from '../const';
 import { getAppliedAreaFilters } from '../lib/getAppliedAreaFilters';
 import styles from './styles.module.scss';
 import { Mode } from '@/const';
@@ -172,7 +173,7 @@ export function GuidancesTable() {
         pagination={paginationConfig}
         loading={isUninitialized || isLoading}
         bordered
-        sticky={{ offsetHeader: 173 }}
+        sticky={{ offsetHeader: STICKY_TABLE_HEADER_OFFSET }}
         onChange={handleTableChange}
       />
     </>

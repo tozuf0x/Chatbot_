@@ -1,13 +1,9 @@
 .buttons {
   position: sticky;
-  top: 142px;
+  top: 136px;
   z-index: 999;
 
   padding-bottom: 20px;
 
   background-color: $color-default-white;
-
-  @include bp-1070 {
-    top: 121px;
-  }
 }

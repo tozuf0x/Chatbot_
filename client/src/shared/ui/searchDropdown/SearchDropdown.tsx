@@ -47,7 +47,7 @@ export function SearchDropdown(
       <Space>
         <Button
           htmlType="button"
-          type="primary"
+          type="link"
           onClick={handleClose}
         >
           Закрыть

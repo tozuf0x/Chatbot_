@@ -29,9 +29,3 @@
     @content;
   }
 }
-
-@mixin bp-1070 {
-  @media (min-width: ($bp-1070)) {
-    @content
-  }
-};
