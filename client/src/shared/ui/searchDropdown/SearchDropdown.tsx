@@ -1,4 +1,3 @@
-import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, InputRef, Space } from 'antd';
 import { FilterDropdownProps } from 'antd/es/table/interface';
 import { useRef, ChangeEvent } from 'react';
@@ -10,7 +9,7 @@ export function SearchDropdown(
     selectedKeys,
     confirm,
     clearFilters,
-    close,
+    close
   }: FilterDropdownProps,
   placeholder: string
 ) {
@@ -18,19 +17,17 @@ export function SearchDropdown(
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setSelectedKeys(evt.target.value ? [evt.target.value] : []);
-  };
-
-  const handleSearch = () => {
-    confirm();
-  };
-
-  const handleReset = () => {
-    clearFilters?.();
+    confirm({ closeDropdown: false });
   };
 
   const handleClose = () => {
-    handleReset();
     close();
+  };
+
+  const handleReset = () => {
+    setSelectedKeys([]);
+    confirm({ closeDropdown: false });
+    clearFilters?.();
   };
 
   return (
@@ -44,22 +41,12 @@ export function SearchDropdown(
         value={selectedKeys[0]}
         placeholder={placeholder}
         onChange={handleInputChange}
-        onPressEnter={handleSearch}
       />
 
       <Space>
         <Button
           htmlType="button"
           type="primary"
-          onClick={handleSearch}
-          icon={<SearchOutlined />}
-        >
-          Искать
-        </Button>
-
-        <Button
-          htmlType="button"
-          type="link"
           onClick={handleClose}
         >
           Закрыть
