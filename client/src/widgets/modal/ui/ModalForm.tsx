@@ -174,6 +174,7 @@ export const ModalForm = forwardRef(function ModalForm(
             dropdownRender={(menu) => (
               <>
                 {menu}
+
                 <Divider className={styles.divider} />
 
                 <Item

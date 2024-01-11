@@ -172,6 +172,7 @@ export function GuidancesTable() {
         pagination={paginationConfig}
         loading={isUninitialized || isLoading}
         bordered
+        sticky={{ offsetHeader: 173 }}
         onChange={handleTableChange}
       />
     </>
