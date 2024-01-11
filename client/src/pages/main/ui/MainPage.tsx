@@ -1,4 +1,4 @@
-import { Layout, Typography } from 'antd';
+import { Divider, Layout, Typography } from 'antd';
 import { Helmet } from 'react-helmet-async';
 import { GuidancesTable } from '@/widgets/guidancesTable';
 import { Header } from '@/widgets/header';
@@ -19,10 +19,17 @@ export function MainPage() {
         <Header />
 
         <Content className={styles.content}>
-          <Title className={styles.title} level={1}>
-            Интерфейс администрирования базы данных чат-бота
-            поддержки пользователей по&nbsp;ошибкам направления P2P&nbsp;S4
+          <Title
+            className={styles.title}
+            level={1}
+          >
+            Интерфейс администрирования базы данных чат-бота поддержки пользователей
+            по&nbsp;ошибкам направления P2P&nbsp;S4
           </Title>
+
+          <div className={styles['divider-wrapper']}>
+            <Divider className={styles.divider} />
+          </div>
 
           <GuidancesTable />
           <ModalEntry />

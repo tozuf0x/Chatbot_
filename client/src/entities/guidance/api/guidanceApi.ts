@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { axiosBaseQuery } from '@/shared/api';
-import { changeNotification } from '@/shared/lib';
+import { changeNotification, sortByProperty } from '@/shared/lib';
 import { FIRST_FILTER_NAME } from '../const';
 import { ApiRoute, API_URL } from '@/const';
 
@@ -28,7 +28,11 @@ export const guidanceApi = createApi({
           return { error: response.error };
         }
 
-        const tranformedData = (response.data as IGuidanceData[]).map((item) =>
+        const sortedData = (response.data as IGuidanceData[]).sort(
+          sortByProperty('errorCode')
+        );
+
+        const tranformedData = sortedData.map((item) =>
           item.appliedArea === '' ? { ...item, appliedArea: FIRST_FILTER_NAME } : item
         );
 

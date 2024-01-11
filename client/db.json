@@ -19,7 +19,7 @@
       "appliedArea": "Заказ на поставку"
     },
     {
-      "errorCode": "SOMEERROR124",
+      "errorCode": "SOMEERROR114",
       "errorText": "Esse consequat occaecat eiusmod ut exercitation nisi exercitation.",
       "guidanceText": "Do dolor magna nulla culpa cupidatat cillum ea laboris cupidatat. Dolor dolor ea eu fugiat qui eu laborum deserunt dolor. Ipsum commodo adipisicing excepteur incididunt Lorem excepteur Lorem velit. Mollit mollit dolor magna esse culpa cillum labore culpa mollit amet. Ut sint tempor anim occaecat errorCode ullamco elit veniam culpa consequat.",
       "appliedArea": "Счет-фактура"
@@ -155,6 +155,18 @@
       "errorText": "22",
       "guidanceText": "22",
       "appliedArea": "Покупка"
+    },
+    {
+      "errorCode": "AAA1123",
+      "errorText": "QQQ",
+      "guidanceText": "QQ",
+      "appliedArea": ""
+    },
+    {
+      "errorCode": "BBB222",
+      "errorText": "22",
+      "guidanceText": "22",
+      "appliedArea": "Договор"
     }
   ]
 }

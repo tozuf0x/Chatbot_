@@ -29,9 +29,3 @@
     @content;
   }
 }
-
-@mixin bp-1600 {
-  @media (min-width: ($bp-1600)) {
-    @content
-  }
-};

@@ -60,6 +60,18 @@ export const ModalForm = forwardRef(function ModalForm(
     value: item,
   }));
 
+  const handleModalOpen = (open: boolean) => {
+    document.documentElement.style.width = '100vw';
+    document.body.style.width = '100vw';
+    onModalOpen?.(open);
+  };
+
+  const handleModalClose = () => {
+    document.documentElement.style.width = 'auto';
+    document.body.style.width = 'auto';
+    onModalClose();
+  };
+
   const handleFieldChange = (
     evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -105,8 +117,8 @@ export const ModalForm = forwardRef(function ModalForm(
       open
       centered
       footer={false}
-      afterOpenChange={onModalOpen}
-      onCancel={onModalClose}
+      afterOpenChange={handleModalOpen}
+      onCancel={handleModalClose}
     >
       <Form
         form={form}
@@ -126,7 +138,6 @@ export const ModalForm = forwardRef(function ModalForm(
             ref={ref as unknown as Ref<InputRef>}
             name="errorCode"
             maxLength={23}
-            placeholder="Например, ERRORCODE123"
             showCount
             allowClear
             onChange={handleFieldChange}
@@ -175,6 +186,7 @@ export const ModalForm = forwardRef(function ModalForm(
             dropdownRender={(menu) => (
               <>
                 {menu}
+
                 <Divider className={styles.divider} />
 
                 <Item
