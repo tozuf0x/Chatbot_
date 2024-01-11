@@ -73,7 +73,7 @@ export function DeleteGuidanceModal() {
             disabled={isLoading}
             onClick={handleModalClose}
           >
-            Отменить
+            Закрыть
           </Button>
         </Flex>,
       ]}

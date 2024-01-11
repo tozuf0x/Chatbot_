@@ -4,13 +4,16 @@ import { FilterDropdownProps } from 'antd/es/table/interface';
 import { useRef, ChangeEvent } from 'react';
 import styles from './styles.module.scss';
 
-export function SearchDropdown({
-  setSelectedKeys,
-  selectedKeys,
-  confirm,
-  clearFilters,
-  close,
-}: FilterDropdownProps) {
+export function SearchDropdown(
+  {
+    setSelectedKeys,
+    selectedKeys,
+    confirm,
+    clearFilters,
+    close,
+  }: FilterDropdownProps,
+  placeholder: string
+) {
   const inputRef = useRef<InputRef>(null);
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +42,7 @@ export function SearchDropdown({
         className={styles.input}
         ref={inputRef}
         value={selectedKeys[0]}
-        placeholder="Поиск по коду ошибки"
+        placeholder={placeholder}
         onChange={handleInputChange}
         onPressEnter={handleSearch}
       />

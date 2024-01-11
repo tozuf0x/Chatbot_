@@ -1,6 +1,7 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Flex, Table, TablePaginationConfig } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
+import { FilterDropdownProps } from 'antd/es/table/interface';
 import { Key } from 'react';
 import {
   changeMode,
@@ -14,8 +15,8 @@ import {
   scrollToTop,
   changeNotification,
 } from '@/shared/lib';
+import { SearchDropdown } from '@/shared/ui';
 import { getAppliedAreaFilters } from '../lib/getAppliedAreaFilters';
-import { SearchDropdown } from './SearchDropdown';
 import styles from './styles.module.scss';
 import { Mode } from '@/const';
 
@@ -36,7 +37,7 @@ export function GuidancesTable() {
       dataIndex: 'errorCode',
       width: '15%',
       filterIcon: <SearchOutlined />,
-      filterDropdown: SearchDropdown,
+      filterDropdown: (props: FilterDropdownProps) => SearchDropdown(props, 'Поиск по коду ошибки'),
       onFilter: (value: boolean | Key, { errorCode }: IGuidanceData) =>
         errorCode
           .toLowerCase()
@@ -128,18 +129,6 @@ export function GuidancesTable() {
 
   return (
     <>
-      <Table
-        className={styles.table}
-        columns={columnsConfig}
-        rowKey={(record) => record.errorCode}
-        dataSource={guidances}
-        rowSelection={rowSelection}
-        pagination={paginationConfig}
-        loading={isUninitialized || isLoading}
-        bordered
-        onChange={handleTableChange}
-      />
-
       <Flex
         className={styles.buttons}
         justify="center"
@@ -173,6 +162,18 @@ export function GuidancesTable() {
           Удалить
         </Button>
       </Flex>
+
+      <Table
+        className={styles.table}
+        columns={columnsConfig}
+        rowKey={(record) => record.errorCode}
+        dataSource={guidances}
+        rowSelection={rowSelection}
+        pagination={paginationConfig}
+        loading={isUninitialized || isLoading}
+        bordered
+        onChange={handleTableChange}
+      />
     </>
   );
 }

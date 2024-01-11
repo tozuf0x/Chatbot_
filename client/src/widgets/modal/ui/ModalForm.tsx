@@ -126,7 +126,6 @@ export const ModalForm = forwardRef(function ModalForm(
             ref={ref as unknown as Ref<InputRef>}
             name="errorCode"
             maxLength={23}
-            placeholder="Например, ERRORCODE123"
             showCount
             allowClear
             onChange={handleFieldChange}

@@ -78,7 +78,7 @@ export function EditGuidanceModal() {
             type="link"
             onClick={handleModalClose}
           >
-            Отменить
+            Закрыть
           </Button>
         </Flex>
       }

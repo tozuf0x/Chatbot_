@@ -78,7 +78,7 @@ export function AddGuidanceModal() {
             type="link"
             onClick={handleModalClose}
           >
-            Отменить
+            Закрыть
           </Button>
 
           <Button
