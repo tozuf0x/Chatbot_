@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error List</title>
+    <!-- Include Bootstrap CSS (you can adjust the paths accordingly) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Error List</h2>
+    <form method="post" action="{{ url_for('edit_error') }}">
+        <button type="submit" class="btn btn-warning mb-3">Edit Selected</button>
+
+        <table class="table" id="errorTable">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Error Text</th>
+                    <th scope="col">Recommendation</th>
+                    <th scope="col">Object</th>
+                    <th scope="col">Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for error in errors %}
+                    <tr>
+                        <td>{{ error.id }}</td>
+                        <td>{{ error.code }}</td>
+                        <td>{{ error.errtext }}</td>
+                        <td>{{ error.recommendation }}</td>
+                        <td>{{ error.obj }}</td>
+                        <td>
+                            <input type="checkbox" name="error_ids" value="{{ error.errorID }}">
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+    <div class="alert alert-danger d-none" id="errorAlert" role="alert"></div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"/>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+<script>
+    // Function to handle checkbox change and initiate editing
+    function handleCheckboxChange(checkbox) {
+        if (checkbox.checked) {
+            var row = $(checkbox).closest("tr");
+            var id = row.find("td:first").text();
+            var code = row.find("td:nth-child(2)").text();
+            var errtext = row.find("td:nth-child(3)").text();
+            var recommendation = row.find("td:nth-child(4)").text();
+            var obj = row.find("td:nth-child(5)").text();
+
+            // Call the function to populate and show the edit modal
+            populateEditModal(id, code, errtext, recommendation, obj);
+        }
+    }
+
+    // Function to handle edit button click
+    function handleEditButtonClick() {
+        // Check if at least one checkbox is selected
+        var selectedCheckbox = $("input[name='error_ids']:checked");
+        if (selectedCheckbox.length > 0) {
+            // Get the details of the first selected error
+            var row = selectedCheckbox.closest("tr");
+            var id = row.find("td:first").text();
+            var code = row.find("td:nth-child(2)").text();
+            var errtext = row.find("td:nth-child(3)").text();
+            var recommendation = row.find("td:nth-child(4)").text();
+            var obj = row.find("td:nth-child(5)").text();
+
+            // Call the function to populate and show the edit modal
+            populateEditModal(id, code, errtext, recommendation, obj);
+        } else {
+            alert("Please select at least one error to edit.");
+        }
+    }
+
+    // Attach change event handlers to checkboxes
+    $(document).ready(function () {
+        $("input[name='error_ids']").change(function () {
+            // Call the function to handle checkbox change
+            handleCheckboxChange(this);
+        });
+
+        // Attach click event handler to the edit button
+        $("#editErrorsBtn").click(function () {
+            // Call the function to handle edit button click
+            handleEditButtonClick();
+        });
+    });
+</script>
+
+</body>
+</html>
